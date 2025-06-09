@@ -640,7 +640,8 @@ function carregarDados() {
             
             // Mostrar aba selecionada
             document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+           document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+
             
             // Atualizar dados específicos da aba
             if (tabName === 'dashboard') {
@@ -1299,82 +1300,7 @@ Relatório gerado em: ${new Date().toLocaleString('pt-PT')}
                 }
             }
         }
-
-        // PERSISTÊNCIA DE DADOS
-		function salvarDados() {
-		const dados = {
-        alunos,
-        professores,
-        aulas,
-        pagamentos,
-        contadorIds
-		};
-			localStorage.setItem('nerDados', JSON.stringify(dados));
-		}
-
-        function carregarDados() {
-			const dadosSalvos = localStorage.getItem('nerDados');
-			if (dadosSalvos) {
-        const dados = JSON.parse(dadosSalvos);
-        alunos = dados.alunos || [];
-        professores = dados.professores || [];
-        aulas = dados.aulas || [];
-        pagamentos = dados.pagamentos || [];
-        contadorIds = dados.contadorIds || { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
-			}
-		}
-            
-            professores = [
-                {
-                    id: 1,
-                    nome: 'Carlos Rocha',
-                    email: 'carlos@email.com',
-                    telefone: '+351 934 567 890',
-                    especialidade: 'Guitarra',
-                    valorAula: 30.00,
-                    status: 'Ativo'
-                },
-                {
-                    id: 2,
-                    nome: 'Ana Costa',
-                    email: 'ana@email.com',
-                    telefone: '+351 945 678 901',
-                    especialidade: 'Vocal',
-                    valorAula: 25.00,
-                    status: 'Ativo'
-                }
-            ];
-            
-            aulas = [
-                {
-                    id: 1,
-                    alunoId: 1,
-                    professorId: 1,
-                    alunoNome: 'João Silva',
-                    professorNome: 'Carlos Rocha',
-                    data: '2024-06-10',
-                    horario: '14:00',
-                    duracao: 60,
-                    valor: 30.00,
-                    status: 'Agendada'
-                }
-            ];
-            
-            pagamentos = [
-                {
-                    id: 1,
-                    alunoId: 1,
-                    alunoNome: 'João Silva',
-                    valor: 60.00,
-                    data: '2024-06-01',
-                    mesReferencia: '2024-06',
-                    metodo: 'Transferência'
-                }
-            ];
-            
-            contadorIds = { aluno: 3, professor: 3, aula: 2, pagamento: 2 };
-        }
-
+           
         // Inicializar tabelas
         window.addEventListener('load', function() {
             atualizarTabelaAlunos();
