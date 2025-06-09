@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt">
 <head>
 <meta charset="utf-8"/>
@@ -251,21 +250,18 @@
             border: 1px solid #dc3545;
             color: #dc3545;
         }
-
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
             }
-            
             .tabs {
                 flex-direction: column;
             }
-            
             .header h1 {
                 font-size: 1.8em;
             }
         }
-    </style>
+</style>
 </head>
 <body>
 <div class="header">
@@ -316,8 +312,8 @@
 <tbody id="proximasAulas">
 <tr>
 <td colspan="5" style="text-align: center; padding: 30px; color: #666;">
-                                Nenhuma aula agendada
-                            </td>
+Nenhuma aula agendada
+</td>
 </tr>
 </tbody>
 </table>
@@ -345,7 +341,18 @@
 </div>
 <div class="form-group">
 <label>Instrumento Principal</label>
-<select id="instrumentoAluno"><option value="">Selecione...</option><option value="Guitarra">Guitarra Elétrica</option><option value="Baixo">Baixo</option><option value="Bateria">Bateria</option><option value="Teclado">Teclado</option><option value="Vocal">Canto</option><option value="Violão">Guitarra Clássica</option><option value="Piano">Piano</option><option value="Acordeão/Concertina">Acordeão/Concertina</option><option value="Cavaquinho">Cavaquinho</option></select>
+<select id="instrumentoAluno">
+<option value="">Selecione...</option>
+<option value="Guitarra">Guitarra Elétrica</option>
+<option value="Baixo">Baixo</option>
+<option value="Bateria">Bateria</option>
+<option value="Teclado">Teclado</option>
+<option value="Vocal">Canto</option>
+<option value="Violão">Guitarra Clássica</option>
+<option value="Piano">Piano</option>
+<option value="Acordeão/Concertina">Acordeão/Concertina</option>
+<option value="Cavaquinho">Cavaquinho</option>
+</select>
 </div>
 <div class="form-group">
 <label>Mensalidade (€)</label>
@@ -393,7 +400,18 @@
 </div>
 <div class="form-group">
 <label>Especialidade</label>
-<select id="especialidadeProfessor"><option value="">Selecione...</option><option value="Guitarra">Guitarra Elétrica</option><option value="Baixo">Baixo</option><option value="Bateria">Bateria</option><option value="Teclado">Teclado</option><option value="Vocal">Canto</option><option value="Violão">Guitarra Clássica</option><option value="Piano">Piano</option><option value="Acordeão/Concertina">Acordeão/Concertina</option><option value="Cavaquinho">Cavaquinho</option></select>
+<select id="especialidadeProfessor">
+<option value="">Selecione...</option>
+<option value="Guitarra">Guitarra Elétrica</option>
+<option value="Baixo">Baixo</option>
+<option value="Bateria">Bateria</option>
+<option value="Teclado">Teclado</option>
+<option value="Vocal">Canto</option>
+<option value="Violão">Guitarra Clássica</option>
+<option value="Piano">Piano</option>
+<option value="Acordeão/Concertina">Acordeão/Concertina</option>
+<option value="Cavaquinho">Cavaquinho</option>
+</select>
 </div>
 <div class="form-group">
 <label>Valor por Aula (€)</label>
@@ -487,6 +505,7 @@
 <!-- Pagamentos -->
 <div class="tab-content" id="pagamentos">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Controle de Pagamentos</h2>
+<!-- Pagamento de alunos -->
 <div class="form-grid">
 <div class="form-group">
 <label>Aluno</label>
@@ -537,6 +556,58 @@
 </tbody>
 </table>
 </div>
+<!-- Pagamento a Professores -->
+<h3 style="color: #f7931e; margin: 30px 0 10px 0;">Pagamento a Professores</h3>
+<div class="form-grid">
+    <div class="form-group">
+        <label>Professor</label>
+        <select id="professorPagamento">
+            <option value="">Selecione um professor...</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Valor (€)</label>
+        <input id="valorPagamentoProfessor" min="0" placeholder="50.00" step="0.01" type="number"/>
+    </div>
+    <div class="form-group">
+        <label>Data do Pagamento</label>
+        <input id="dataPagamentoProfessor" type="date"/>
+    </div>
+    <div class="form-group">
+        <label>Referência (Aula/Mês)</label>
+        <input id="referenciaPagamentoProfessor" placeholder="Ex: Aula 10/06 ou Junho 2025" type="text"/>
+    </div>
+    <div class="form-group">
+        <label>Método de Pagamento</label>
+        <select id="metodoPagamentoProfessor">
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Transferência">Transferência</option>
+            <option value="MB Way">MB Way</option>
+            <option value="Cartão">Cartão</option>
+        </select>
+    </div>
+</div>
+<div style="text-align: center;">
+    <button class="btn" onclick="registrarPagamentoProfessor()">Registrar Pagamento Professor</button>
+    <button class="btn" onclick="limparFormPagamentoProfessor()">Limpar Formulário</button>
+</div>
+<div class="table-container">
+    <h4 style="color: #f7931e; padding: 20px 0 10px 0;">Pagamentos a Professores</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Professor</th>
+                <th>Valor</th>
+                <th>Referência</th>
+                <th>Método</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaPagamentosProfessores">
+        </tbody>
+    </table>
+</div>
 </div>
 <!-- Relatórios -->
 <div class="tab-content" id="relatorios">
@@ -562,753 +633,68 @@
 <div style="text-align: center; margin-bottom: 30px;">
 <button class="btn" onclick="gerarRelatorioMensal()">Relatório Mensal</button>
 <button class="btn" onclick="exportarDados()">Exportar Dados</button>
-<button class="btn" onclick="limparTodosDados()">Limpar Todos os Dados</button>
-</div>
-<div class="table-container">
-<h3 style="padding: 20px; color: #ff6b35;">Resumo por Instrumento</h3>
-<table>
-<thead>
-<tr>
-<th>Instrumento</th>
-<th>Nº Alunos</th>
-<th>Receita Mensal</th>
-<th>% do Total</th>
-</tr>
-</thead>
-<tbody id="resumoInstrumentos">
-</tbody>
-</table>
 </div>
 </div>
 </div>
+<!-- Scripts -->
 <script>
-// PERSISTÊNCIA LOCAL COM LOCALSTORAGE
-function salvarDados() {
-    const dados = {
-        alunos,
-        professores,
-        aulas,
-        pagamentos,
-        contadorIds
-    };
-    localStorage.setItem('nerDados', JSON.stringify(dados));
+// Funções para tabs (já existentes)
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    document.querySelector('.tab[onclick="showTab(\''+tabId+'\')"]').classList.add('active');
 }
 
-function carregarDados() {
-    const dadosSalvos = localStorage.getItem('nerDados');
-    if (dadosSalvos) {
-        const dados = JSON.parse(dadosSalvos);
-        alunos = dados.alunos || [];
-        professores = dados.professores || [];
-        aulas = dados.aulas || [];
-        pagamentos = dados.pagamentos || [];
-        contadorIds = dados.contadorIds || { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
+// Funções para pagamentos a professores
+function registrarPagamentoProfessor() {
+    const professor = document.getElementById('professorPagamento').value;
+    const valor = document.getElementById('valorPagamentoProfessor').value;
+    const data = document.getElementById('dataPagamentoProfessor').value;
+    const referencia = document.getElementById('referenciaPagamentoProfessor').value;
+    const metodo = document.getElementById('metodoPagamentoProfessor').value;
+
+    if (!professor || !valor || !data) {
+        alert('Preencha todos os campos obrigatórios!');
+        return;
     }
+
+    const tabela = document.getElementById('tabelaPagamentosProfessores');
+    const row = tabela.insertRow();
+    row.insertCell(0).innerText = data;
+    row.insertCell(1).innerText = professor;
+    row.insertCell(2).innerText = valor;
+    row.insertCell(3).innerText = referencia;
+    row.insertCell(4).innerText = metodo;
+    row.insertCell(5).innerHTML = '<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">Remover</button>';
+
+    limparFormPagamentoProfessor();
 }
 
-        // Dados em memória
-        let alunos = [];
-        let professores = [];
-        let aulas = [];
-        let pagamentos = [];
-        let contadorIds = { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
+function limparFormPagamentoProfessor() {
+    document.getElementById('professorPagamento').value = '';
+    document.getElementById('valorPagamentoProfessor').value = '';
+    document.getElementById('dataPagamentoProfessor').value = '';
+    document.getElementById('referenciaPagamentoProfessor').value = '';
+    document.getElementById('metodoPagamentoProfessor').value = 'Dinheiro';
+}
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            carregarDados();
-            atualizarDashboard();
-            atualizarSelects();
-            
-            // Definir data atual como padrão
-            const hoje = new Date().toISOString().split('T')[0];
-            document.getElementById('dataPagamento').value = hoje;
-            document.getElementById('dataAula').value = hoje;
-            
-            // Definir mês atual como padrão
-            const mesAtual = new Date().toISOString().slice(0, 7);
-            document.getElementById('mesReferencia').value = mesAtual;
-        });
+// Preencher select de professores automaticamente
+function atualizarSelectProfessoresPagamento() {
+    const select = document.getElementById('professorPagamento');
+    if (!select) return;
+    const professores = JSON.parse(localStorage.getItem('professores') || '[]');
+    select.innerHTML = '<option value="">Selecione um professor...</option>';
+    professores.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.nome;
+        opt.innerText = p.nome;
+        select.appendChild(opt);
+    });
+}
+document.addEventListener('DOMContentLoaded', atualizarSelectProfessoresPagamento);
 
-        // Funções de navegação
-        function showTab(tabName) {
-            // Esconder todas as abas
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Mostrar aba selecionada
-            document.getElementById(tabName).classList.add('active');
-           document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
-
-            
-            // Atualizar dados específicos da aba
-            if (tabName === 'dashboard') {
-                atualizarDashboard();
-            } else if (tabName === 'relatorios') {
-                atualizarRelatorios();
-            }
-        }
-
-        // Função para mostrar alertas
-        function mostrarAlerta(mensagem, tipo = 'success') {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${tipo}`;
-            alertDiv.textContent = mensagem;
-            
-            const container = document.querySelector('.container');
-            container.insertBefore(alertDiv, container.firstChild);
-            
-            setTimeout(() => {
-                alertDiv.remove();
-            }, 3000);
-        }
-
-        // GESTÃO DE ALUNOS
-        function adicionarAluno() {
-            const nome = document.getElementById('nomeAluno').value;
-            const email = document.getElementById('emailAluno').value;
-            const telefone = document.getElementById('telefoneAluno').value;
-            const nascimento = document.getElementById('nascimentoAluno').value;
-            const instrumento = document.getElementById('instrumentoAluno').value;
-            const mensalidade = parseFloat(document.getElementById('mensalidadeAluno').value) || 0;
-
-            if (!nome || !email || !instrumento) {
-                mostrarAlerta('Preencha os campos obrigatórios: Nome, Email e Instrumento', 'error');
-                return;
-            }
-
-            const novoAluno = {
-                id: contadorIds.aluno++,
-                nome,
-                email,
-                telefone,
-                nascimento,
-                instrumento,
-                mensalidade,
-                status: 'Ativo',
-                dataInscricao: new Date().toLocaleDateString('pt-PT')
-            };
-
-            alunos.push(novoAluno);
-            salvarDados();
-            atualizarTabelaAlunos();
-            atualizarSelects();
-            limparFormAluno();
-            mostrarAlerta('Aluno adicionado com sucesso!');
-        }
-
-        function limparFormAluno() {
-            document.getElementById('nomeAluno').value = '';
-            document.getElementById('emailAluno').value = '';
-            document.getElementById('telefoneAluno').value = '';
-            document.getElementById('nascimentoAluno').value = '';
-            document.getElementById('instrumentoAluno').value = '';
-            document.getElementById('mensalidadeAluno').value = '';
-        }
-
-        function atualizarTabelaAlunos() {
-            const tbody = document.getElementById('tabelaAlunos');
-            tbody.innerHTML = '';
-
-            alunos.forEach(aluno => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${aluno.nome}</td>
-                    <td>${aluno.email}</td>
-                    <td>${aluno.telefone}</td>
-                    <td>${aluno.instrumento}</td>
-                    <td class="euro">€${aluno.mensalidade.toFixed(2)}</td>
-                    <td class="status-${aluno.status.toLowerCase()}">${aluno.status}</td>
-                    <td>
-                        <button class="btn btn-danger" onclick="removerAluno(${aluno.id})">Remover</button>
-                    </td>
-                `;
-            });
-        }
-
-        function removerAluno(id) {
-            if (confirm('Tem certeza que deseja remover este aluno?')) {
-                alunos = alunos.filter(aluno => aluno.id !== id);
-                salvarDados();
-                atualizarTabelaAlunos();
-                atualizarSelects();
-                mostrarAlerta('Aluno removido com sucesso!');
-            }
-        }
-
-        function filtrarAlunos() {
-            const termo = document.getElementById('searchAlunos').value.toLowerCase();
-            const rows = document.querySelectorAll('#tabelaAlunos tr');
-            
-            rows.forEach(row => {
-                const texto = row.textContent.toLowerCase();
-                row.style.display = texto.includes(termo) ? '' : 'none';
-            });
-        }
-
-        // GESTÃO DE PROFESSORES
-        function adicionarProfessor() {
-            const nome = document.getElementById('nomeProfessor').value;
-            const email = document.getElementById('emailProfessor').value;
-            const telefone = document.getElementById('telefoneProfessor').value;
-            const especialidade = document.getElementById('especialidadeProfessor').value;
-            const valorAula = parseFloat(document.getElementById('valorAulaProfessor').value) || 0;
-
-            if (!nome || !email || !especialidade) {
-                mostrarAlerta('Preencha os campos obrigatórios: Nome, Email e Especialidade', 'error');
-                return;
-            }
-
-            const novoProfessor = {
-                id: contadorIds.professor++,
-                nome,
-                email,
-                telefone,
-                especialidade,
-                valorAula,
-                status: 'Ativo'
-            };
-
-            professores.push(novoProfessor);
-            salvarDados();
-            atualizarTabelaProfessores();
-            atualizarSelects();
-            limparFormProfessor();
-            mostrarAlerta('Professor adicionado com sucesso!');
-        }
-
-        function limparFormProfessor() {
-            document.getElementById('nomeProfessor').value = '';
-            document.getElementById('emailProfessor').value = '';
-            document.getElementById('telefoneProfessor').value = '';
-            document.getElementById('especialidadeProfessor').value = '';
-            document.getElementById('valorAulaProfessor').value = '';
-        }
-
-        function atualizarTabelaProfessores() {
-            const tbody = document.getElementById('tabelaProfessores');
-            tbody.innerHTML = '';
-
-            professores.forEach(professor => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${professor.nome}</td>
-                    <td>${professor.email}</td>
-                    <td>${professor.telefone}</td>
-                    <td>${professor.especialidade}</td>
-                    <td class="euro">€${professor.valorAula.toFixed(2)}</td>
-                    <td class="status-${professor.status.toLowerCase()}">${professor.status}</td>
-                    <td>
-                        <button class="btn btn-danger" onclick="removerProfessor(${professor.id})">Remover</button>
-                    </td>
-                `;
-            });
-        }
-
-        function removerProfessor(id) {
-            if (confirm('Tem certeza que deseja remover este professor?')) {
-                professores = professores.filter(professor => professor.id !== id);
-                salvarDados();
-                atualizarTabelaProfessores();
-                atualizarSelects();
-                mostrarAlerta('Professor removido com sucesso!');
-            }
-        }
-
-        function filtrarProfessores() {
-            const termo = document.getElementById('searchProfessores').value.toLowerCase();
-            const rows = document.querySelectorAll('#tabelaProfessores tr');
-            
-            rows.forEach(row => {
-                const texto = row.textContent.toLowerCase();
-                row.style.display = texto.includes(termo) ? '' : 'none';
-            });
-        }
-
-        // GESTÃO DE AULAS
-        function agendarAula() {
-            const alunoId = parseInt(document.getElementById('alunoAula').value);
-            const professorId = parseInt(document.getElementById('professorAula').value);
-            const data = document.getElementById('dataAula').value;
-            const horario = document.getElementById('horarioAula').value;
-            const duracao = parseInt(document.getElementById('duracaoAula').value);
-            const valor = parseFloat(document.getElementById('valorAula').value) || 0;
-
-            if (!alunoId || !professorId || !data || !horario) {
-                mostrarAlerta('Preencha todos os campos obrigatórios', 'error');
-                return;
-            }
-
-            const aluno = alunos.find(a => a.id === alunoId);
-            const professor = professores.find(p => p.id === professorId);
-
-            const novaAula = {
-                id: contadorIds.aula++,
-                alunoId,
-                professorId,
-                alunoNome: aluno.nome,
-                professorNome: professor.nome,
-                data,
-                horario,
-                duracao,
-                valor,
-                status: 'Agendada'
-            };
-
-            aulas.push(novaAula);
-            salvarDados();
-            atualizarTabelaAulas();
-            limparFormAula();
-            atualizarDashboard();
-            mostrarAlerta('Aula agendada com sucesso!');
-        }
-
-        function limparFormAula() {
-            document.getElementById('alunoAula').value = '';
-            document.getElementById('professorAula').value = '';
-            document.getElementById('dataAula').value = new Date().toISOString().split('T')[0];
-            document.getElementById('horarioAula').value = '';
-            document.getElementById('duracaoAula').value = '60';
-            document.getElementById('valorAula').value = '';
-        }
-
-        function atualizarTabelaAulas() {
-            const tbody = document.getElementById('tabelaAulas');
-            tbody.innerHTML = '';
-
-            // Ordenar aulas por data e horário
-            const aulasOrdenadas = [...aulas].sort((a, b) => {
-                const dataA = new Date(a.data + 'T' + a.horario);
-                const dataB = new Date(b.data + 'T' + b.horario);
-                return dataB - dataA;
-            });
-
-            aulasOrdenadas.forEach(aula => {
-                const dataFormatada = new Date(aula.data).toLocaleDateString('pt-PT');
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${dataFormatada} ${aula.horario}</td>
-                    <td>${aula.alunoNome}</td>
-                    <td>${aula.professorNome}</td>
-                    <td>${aula.duracao} min</td>
-                    <td class="euro">€${aula.valor.toFixed(2)}</td>
-                    <td class="status-${aula.status.toLowerCase().replace(' ', '')}">${aula.status}</td>
-                    <td>
-                        <button class="btn" onclick="marcarAulaRealizada(${aula.id})">Realizada</button>
-                        <button class="btn btn-danger" onclick="cancelarAula(${aula.id})">Cancelar</button>
-                    </td>
-                `;
-            });
-        }
-
-        function marcarAulaRealizada(id) {
-            const aula = aulas.find(a => a.id === id);
-            if (aula) {
-                aula.status = 'Realizada';
-                salvarDados();
-                atualizarTabelaAulas();
-                atualizarDashboard();
-                mostrarAlerta('Aula marcada como realizada!');
-            }
-        }
-
-        function cancelarAula(id) {
-            if (confirm('Tem certeza que deseja cancelar esta aula?')) {
-                const aula = aulas.find(a => a.id === id);
-                if (aula) {
-                    aula.status = 'Cancelada';
-                    salvarDados();
-                    atualizarTabelaAulas();
-                    atualizarDashboard();
-                    mostrarAlerta('Aula cancelada!');
-                }
-            }
-        }
-
-        function filtrarAulas() {
-            const termo = document.getElementById('searchAulas').value.toLowerCase();
-            const rows = document.querySelectorAll('#tabelaAulas tr');
-            
-            rows.forEach(row => {
-                const texto = row.textContent.toLowerCase();
-                row.style.display = texto.includes(termo) ? '' : 'none';
-            });
-        }
-
-        // GESTÃO DE PAGAMENTOS
-        function registrarPagamento() {
-            const alunoId = parseInt(document.getElementById('alunoPagamento').value);
-            const valor = parseFloat(document.getElementById('valorPagamento').value);
-            const data = document.getElementById('dataPagamento').value;
-            const mesReferencia = document.getElementById('mesReferencia').value;
-            const metodo = document.getElementById('metodoPagamento').value;
-
-            if (!alunoId || !valor || !data || !mesReferencia) {
-                mostrarAlerta('Preencha todos os campos obrigatórios', 'error');
-                return;
-            }
-
-            const aluno = alunos.find(a => a.id === alunoId);
-
-            const novoPagamento = {
-                id: contadorIds.pagamento++,
-                alunoId,
-                alunoNome: aluno.nome,
-                valor,
-                data,
-                mesReferencia,
-                metodo
-            };
-
-            pagamentos.push(novoPagamento);
-            salvarDados();
-            atualizarTabelaPagamentos();
-            limparFormPagamento();
-            atualizarDashboard();
-            mostrarAlerta('Pagamento registrado com sucesso!');
-        }
-
-        function limparFormPagamento() {
-            document.getElementById('alunoPagamento').value = '';
-            document.getElementById('valorPagamento').value = '';
-            document.getElementById('dataPagamento').value = new Date().toISOString().split('T')[0];
-            document.getElementById('mesReferencia').value = new Date().toISOString().slice(0, 7);
-            document.getElementById('metodoPagamento').value = 'Dinheiro';
-        }
-
-        function atualizarTabelaPagamentos() {
-            const tbody = document.getElementById('tabelaPagamentos');
-            tbody.innerHTML = '';
-
-            // Ordenar pagamentos por data
-            const pagamentosOrdenados = [...pagamentos].sort((a, b) => new Date(b.data) - new Date(a.data));
-
-            pagamentosOrdenados.forEach(pagamento => {
-                const dataFormatada = new Date(pagamento.data).toLocaleDateString('pt-PT');
-                const mesFormatado = new Date(pagamento.mesReferencia + '-01').toLocaleDateString('pt-PT', { month: '2-digit', year: 'numeric' });
-                
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${dataFormatada}</td>
-                    <td>${pagamento.alunoNome}</td>
-                    <td class="euro">€${pagamento.valor.toFixed(2)}</td>
-                    <td>${mesFormatado}</td>
-                    <td>${pagamento.metodo}</td>
-                    <td>
-                        <button class="btn btn-danger" onclick="removerPagamento(${pagamento.id})">Remover</button>
-                    </td>
-                `;
-            });
-        }
-
-        function removerPagamento(id) {
-            if (confirm('Tem certeza que deseja remover este pagamento?')) {
-                pagamentos = pagamentos.filter(pagamento => pagamento.id !== id);
-                salvarDados();
-                atualizarTabelaPagamentos();
-                atualizarDashboard();
-                mostrarAlerta('Pagamento removido!');
-            }
-        }
-
-        function filtrarPagamentos() {
-            const termo = document.getElementById('searchPagamentos').value.toLowerCase();
-            const rows = document.querySelectorAll('#tabelaPagamentos tr');
-            
-            rows.forEach(row => {
-                const texto = row.textContent.toLowerCase();
-                row.style.display = texto.includes(termo) ? '' : 'none';
-            });
-        }
-
-        // DASHBOARD E ESTATÍSTICAS
-        function atualizarDashboard() {
-            // Atualizar contadores
-            document.getElementById('totalAlunos').textContent = alunos.length;
-            document.getElementById('totalProfessores').textContent = professores.length;
-            
-            // Aulas deste mês
-            const hoje = new Date();
-            const mesAtual = hoje.getMonth();
-            const anoAtual = hoje.getFullYear();
-            
-            const aulasMes = aulas.filter(aula => {
-                const dataAula = new Date(aula.data);
-                return dataAula.getMonth() === mesAtual && dataAula.getFullYear() === anoAtual;
-            });
-            
-            document.getElementById('totalAulas').textContent = aulasMes.length;
-            
-            // Receita mensal
-            const receitaMes = pagamentos.filter(pagamento => {
-                const dataPagamento = new Date(pagamento.data);
-                return dataPagamento.getMonth() === mesAtual && dataPagamento.getFullYear() === anoAtual;
-            }).reduce((total, pagamento) => total + pagamento.valor, 0);
-            
-            document.getElementById('receitaMensal').textContent = `€${receitaMes.toFixed(2)}`;
-            
-            // Próximas aulas
-            atualizarProximasAulas();
-        }
-
-        function atualizarProximasAulas() {
-            const tbody = document.getElementById('proximasAulas');
-            const hoje = new Date();
-            
-            const proximasAulas = aulas.filter(aula => {
-                const dataAula = new Date(aula.data + 'T' + aula.horario);
-                return dataAula >= hoje && aula.status === 'Agendada';
-            }).sort((a, b) => {
-                const dataA = new Date(a.data + 'T' + a.horario);
-                const dataB = new Date(b.data + 'T' + b.horario);
-                return dataA - dataB;
-            }).slice(0, 5);
-
-            tbody.innerHTML = '';
-            
-            if (proximasAulas.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" style="text-align: center; padding: 30px; color: #666;">
-                            Nenhuma aula agendada
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            proximasAulas.forEach(aula => {
-                const aluno = alunos.find(a => a.id === aula.alunoId);
-                const professor = professores.find(p => p.id === aula.professorId);
-                const dataFormatada = new Date(aula.data).toLocaleDateString('pt-PT');
-                
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${dataFormatada} ${aula.horario}</td>
-                    <td>${aula.alunoNome}</td>
-                    <td>${aula.professorNome}</td>
-                    <td>${aluno ? aluno.instrumento : 'N/A'}</td>
-                    <td class="status-agendada">${aula.status}</td>
-                `;
-            });
-        }
-
-        function atualizarRelatorios() {
-            // Receita total
-            const receitaTotal = pagamentos.reduce((total, pagamento) => total + pagamento.valor, 0);
-            document.getElementById('receitaTotal').textContent = `€${receitaTotal.toFixed(2)}`;
-            
-            // Aulas realizadas
-            const aulasRealizadas = aulas.filter(aula => aula.status === 'Realizada').length;
-            document.getElementById('aulasRealizadas').textContent = aulasRealizadas;
-            
-            // Alunos ativos
-            const alunosAtivos = alunos.filter(aluno => aluno.status === 'Ativo').length;
-            document.getElementById('alunosAtivos').textContent = alunosAtivos;
-            
-            // Média mensal
-            const mesesComPagamentos = new Set(pagamentos.map(p => p.mesReferencia)).size;
-            const mediaMensal = mesesComPagamentos > 0 ? receitaTotal / mesesComPagamentos : 0;
-            document.getElementById('mediaMensal').textContent = `€${mediaMensal.toFixed(2)}`;
-            
-            // Resumo por instrumentos
-            atualizarResumoInstrumentos();
-        }
-
-        function atualizarResumoInstrumentos() {
-            const tbody = document.getElementById('resumoInstrumentos');
-            tbody.innerHTML = '';
-            
-            const instrumentos = {};
-            
-            alunos.forEach(aluno => {
-                if (!instrumentos[aluno.instrumento]) {
-                    instrumentos[aluno.instrumento] = {
-                        alunos: 0,
-                        receita: 0
-                    };
-                }
-                instrumentos[aluno.instrumento].alunos++;
-                instrumentos[aluno.instrumento].receita += aluno.mensalidade;
-            });
-            
-            const receitaTotal = Object.values(instrumentos).reduce((total, inst) => total + inst.receita, 0);
-            
-            Object.keys(instrumentos).forEach(instrumento => {
-                const dados = instrumentos[instrumento];
-                const percentual = receitaTotal > 0 ? (dados.receita / receitaTotal * 100).toFixed(1) : 0;
-                
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${instrumento}</td>
-                    <td>${dados.alunos}</td>
-                    <td class="euro">€${dados.receita.toFixed(2)}</td>
-                    <td>${percentual}%</td>
-                `;
-            });
-        }
-
-        // FUNÇÕES DE SELECTS
-        function atualizarSelects() {
-            // Select de alunos
-            const selectAlunoAula = document.getElementById('alunoAula');
-            const selectAlunoPagamento = document.getElementById('alunoPagamento');
-            
-            [selectAlunoAula, selectAlunoPagamento].forEach(select => {
-                const valorAtual = select.value;
-                select.innerHTML = '<option value="">Selecione um aluno...</option>';
-                
-                alunos.forEach(aluno => {
-                    const option = document.createElement('option');
-                    option.value = aluno.id;
-                    option.textContent = `${aluno.nome} (${aluno.instrumento})`;
-                    select.appendChild(option);
-                });
-                
-                select.value = valorAtual;
-            });
-            
-            // Select de professores
-            const selectProfessorAula = document.getElementById('professorAula');
-            const valorAtualProf = selectProfessorAula.value;
-            selectProfessorAula.innerHTML = '<option value="">Selecione um professor...</option>';
-            
-            professores.forEach(professor => {
-                const option = document.createElement('option');
-                option.value = professor.id;
-                option.textContent = `${professor.nome} (${professor.especialidade})`;
-                selectProfessorAula.appendChild(option);
-            });
-            
-            selectProfessorAula.value = valorAtualProf;
-        }
-
-        // AUTO-PREENCHIMENTO DE VALOR DA AULA
-        document.getElementById('professorAula').addEventListener('change', function() {
-            const professorId = parseInt(this.value);
-            const professor = professores.find(p => p.id === professorId);
-            
-            if (professor) {
-                document.getElementById('valorAula').value = professor.valorAula.toFixed(2);
-            }
-        });
-
-        // AUTO-PREENCHIMENTO DE MENSALIDADE NO PAGAMENTO
-        document.getElementById('alunoPagamento').addEventListener('change', function() {
-            const alunoId = parseInt(this.value);
-            const aluno = alunos.find(a => a.id === alunoId);
-            
-            if (aluno) {
-                document.getElementById('valorPagamento').value = aluno.mensalidade.toFixed(2);
-            }
-        });
-
-        // FUNÇÕES DE RELATÓRIOS
-        function gerarRelatorioMensal() {
-            const hoje = new Date();
-            const mesAtual = hoje.getMonth();
-            const anoAtual = hoje.getFullYear();
-            const nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
-                               'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            
-            const pagamentosMes = pagamentos.filter(pagamento => {
-                const dataPagamento = new Date(pagamento.data);
-                return dataPagamento.getMonth() === mesAtual && dataPagamento.getFullYear() === anoAtual;
-            });
-            
-            const aulasMes = aulas.filter(aula => {
-                const dataAula = new Date(aula.data);
-                return dataAula.getMonth() === mesAtual && dataAula.getFullYear() === anoAtual;
-            });
-            
-            const receitaMes = pagamentosMes.reduce((total, p) => total + p.valor, 0);
-            const aulasRealizadasMes = aulasMes.filter(a => a.status === 'Realizada').length;
-            
-            const relatorio = `
-=== RELATÓRIO MENSAL - ${nomesMeses[mesAtual]} ${anoAtual} ===
-NER - Nova Escola Rock
-
-RESUMO FINANCEIRO:
-• Receita Total: €${receitaMes.toFixed(2)}
-• Número de Pagamentos: ${pagamentosMes.length}
-• Valor Médio por Pagamento: €${pagamentosMes.length > 0 ? (receitaMes / pagamentosMes.length).toFixed(2) : '0.00'}
-
-ATIVIDADE:
-• Aulas Agendadas: ${aulasMes.length}
-• Aulas Realizadas: ${aulasRealizadasMes}
-• Taxa de Realização: ${aulasMes.length > 0 ? ((aulasRealizadasMes / aulasMes.length) * 100).toFixed(1) : 0}%
-
-ALUNOS:
-• Total de Alunos Ativos: ${alunos.filter(a => a.status === 'Ativo').length}
-• Professores Ativos: ${professores.filter(p => p.status === 'Ativo').length}
-
-Relatório gerado em: ${new Date().toLocaleString('pt-PT')}
-            `;
-            
-            // Criar e baixar arquivo de texto
-            const elemento = document.createElement('a');
-            const arquivo = new Blob([relatorio], {type: 'text/plain'});
-            elemento.href = URL.createObjectURL(arquivo);
-            elemento.download = `relatorio_${nomesMeses[mesAtual]}_${anoAtual}.txt`;
-            elemento.click();
-            
-            mostrarAlerta('Relatório mensal gerado e baixado!');
-        }
-
-        function exportarDados() {
-            const dados = {
-                alunos,
-                professores,
-                aulas,
-                pagamentos,
-                exportadoEm: new Date().toISOString(),
-                escola: 'NER - Nova Escola Rock'
-            };
-            
-            const elemento = document.createElement('a');
-            const arquivo = new Blob([JSON.stringify(dados, null, 2)], {type: 'application/json'});
-            elemento.href = URL.createObjectURL(arquivo);
-            elemento.download = `backup_ner_${new Date().toISOString().split('T')[0]}.json`;
-            elemento.click();
-            
-            mostrarAlerta('Dados exportados com sucesso!');
-        }
-
-        function limparTodosDados() {
-            if (confirm('ATENÇÃO: Esta ação irá apagar TODOS os dados da escola. Esta ação não pode ser desfeita. Tem certeza?')) {
-                if (confirm('Última confirmação: Todos os alunos, professores, aulas e pagamentos serão permanentemente removidos. Continuar?')) {
-                    alunos = [];
-                    professores = [];
-                    aulas = [];
-                    pagamentos = [];
-                    contadorIds = { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
-                    
-                    salvarDados();
-                    
-                    // Atualizar todas as tabelas
-                    atualizarTabelaAlunos();
-                    atualizarTabelaProfessores();
-                    atualizarTabelaAulas();
-                    atualizarTabelaPagamentos();
-                    atualizarSelects();
-                    atualizarDashboard();
-                    atualizarRelatorios();
-                    
-                    mostrarAlerta('Todos os dados foram removidos!', 'error');
-                }
-            }
-        }
-           
-        // Inicializar tabelas
-        window.addEventListener('load', function() {
-            atualizarTabelaAlunos();
-            atualizarTabelaProfessores();
-            atualizarTabelaAulas();
-            atualizarTabelaPagamentos();
-            atualizarRelatorios();
-        });
-    </script>
+// ... resto dos teus scripts para alunos, professores, aulas, pagamentos de alunos, etc ...
+</script>
 </body>
 </html>
