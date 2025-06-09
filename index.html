@@ -1301,43 +1301,28 @@ Relatório gerado em: ${new Date().toLocaleString('pt-PT')}
         }
 
         // PERSISTÊNCIA DE DADOS
-        function salvarDados() {
-            const dados = {
-                alunos,
-                professores,
-                aulas,
-                pagamentos,
-                contadorIds
-            };
-            // Nota: Em um ambiente real, aqui seria feita a persistência no servidor
-            // Como estamos em um ambiente de demonstração, os dados são mantidos apenas na sessão
-        }
+       function salvarDados() {
+    const dados = {
+        alunos,
+        professores,
+        aulas,
+        pagamentos,
+        contadorIds
+    };
+    localStorage.setItem('nerDados', JSON.stringify(dados));
+}
 
         function carregarDados() {
-            // Dados de exemplo para demonstração
-            alunos = [
-                {
-                    id: 1,
-                    nome: 'João Silva',
-                    email: 'joao@email.com',
-                    telefone: '+351 912 345 678',
-                    nascimento: '1995-05-15',
-                    instrumento: 'Guitarra',
-                    mensalidade: 60.00,
-                    status: 'Ativo',
-                    dataInscricao: '15/05/2024'
-                },
-                {
-                    id: 2,
-                    nome: 'Maria Santos',
-                    email: 'maria@email.com',
-                    telefone: '+351 923 456 789',
-                    nascimento: '1988-08-22',
-                    instrumento: 'Vocal',
-                    mensalidade: 50.00,
-                    status: 'Ativo',
-                    dataInscricao: '22/08/2024'
-                }
+    const dadosSalvos = localStorage.getItem('nerDados');
+    if (dadosSalvos) {
+        const dados = JSON.parse(dadosSalvos);
+        alunos = dados.alunos || [];
+        professores = dados.professores || [];
+        aulas = dados.aulas || [];
+        pagamentos = dados.pagamentos || [];
+        contadorIds = dados.contadorIds || { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
+    }
+}
             ];
             
             professores = [
