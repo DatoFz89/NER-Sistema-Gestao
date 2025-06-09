@@ -5,262 +5,50 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NER - Nova Escola Rock</title>
 <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            color: #fff;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: linear-gradient(90deg, #ff6b35, #f7931e);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            background: #333;
-            border-radius: 10px 10px 0 0;
-            overflow: hidden;
-            margin-bottom: 0;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 15px 20px;
-            background: #444;
-            color: #ccc;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 16px;
-        }
-
-        .tab.active {
-            background: #ff6b35;
-            color: white;
-        }
-
-        .tab:hover:not(.active) {
-            background: #555;
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-            background: #2a2a2a;
-            border-radius: 0 0 10px 10px;
-            padding: 30px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #ff6b35;
-        }
-
-        .form-group input, .form-group select {
-            padding: 12px;
-            border: 2px solid #555;
-            border-radius: 8px;
-            background: #1a1a1a;
-            color: white;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #ff6b35;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, #ff6b35, #f7931e);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #dc3545, #c82333);
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
-        }
-
-        .table-container {
-            background: #1a1a1a;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #ff6b35;
-            color: white;
-            padding: 15px 10px;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #333;
-            color: #ccc;
-        }
-
-        tr:hover {
-            background: #333;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #333, #444);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            border: 2px solid #ff6b35;
-        }
-
-        .stat-card h3 {
-            color: #ff6b35;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .stat-card p {
-            color: #ccc;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 2px solid #555;
-            border-radius: 10px;
-            background: #1a1a1a;
-            color: white;
-            font-size: 16px;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: #ff6b35;
-        }
-
-        .euro {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .status-ativo {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .status-inativo {
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-        .alert {
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .alert-success {
-            background: rgba(40, 167, 69, 0.2);
-            border: 1px solid #28a745;
-            color: #28a745;
-        }
-
-        .alert-error {
-            background: rgba(220, 53, 69, 0.2);
-            border: 1px solid #dc3545;
-            color: #dc3545;
-        }
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .tabs {
-                flex-direction: column;
-            }
-            .header h1 {
-                font-size: 1.8em;
-            }
-        }
+    /* ... [todo o teu CSS igual ao original] ... */
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {font-family: Arial, sans-serif; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: #fff; min-height: 100vh;}
+    .header {background: linear-gradient(90deg, #ff6b35, #f7931e); padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);}
+    .header h1 {font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
+    .header p {font-size: 1.2em; opacity: 0.9;}
+    .container {max-width: 1400px; margin: 0 auto; padding: 20px;}
+    .tabs {display: flex; background: #333; border-radius: 10px 10px 0 0; overflow: hidden; margin-bottom: 0;}
+    .tab {flex: 1; padding: 15px 20px; background: #444; color: #ccc; cursor: pointer; transition: all 0.3s ease; border: none; font-size: 16px;}
+    .tab.active {background: #ff6b35; color: white;}
+    .tab:hover:not(.active) {background: #555; color: white;}
+    .tab-content {display: none; background: #2a2a2a; border-radius: 0 0 10px 10px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.3);}
+    .tab-content.active {display: block;}
+    .form-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;}
+    .form-group {display: flex; flex-direction: column;}
+    .form-group label {margin-bottom: 8px; font-weight: bold; color: #ff6b35;}
+    .form-group input, .form-group select {padding: 12px; border: 2px solid #555; border-radius: 8px; background: #1a1a1a; color: white; font-size: 16px; transition: border-color 0.3s ease;}
+    .form-group input:focus, .form-group select:focus {outline: none; border-color: #ff6b35;}
+    .btn {padding: 12px 25px; background: linear-gradient(45deg, #ff6b35, #f7931e); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: all 0.3s ease; margin: 5px;}
+    .btn:hover {transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);}
+    .btn-danger {background: linear-gradient(45deg, #dc3545, #c82333);}
+    .btn-danger:hover {box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);}
+    .table-container {background: #1a1a1a; border-radius: 10px; overflow: hidden; margin-top: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);}
+    table {width: 100%; border-collapse: collapse;}
+    th {background: #ff6b35; color: white; padding: 15px 10px; text-align: left; font-weight: bold;}
+    td {padding: 12px 10px; border-bottom: 1px solid #333; color: #ccc;}
+    tr:hover {background: #333;}
+    .stats {display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;}
+    .stat-card {background: linear-gradient(135deg, #333, #444); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 2px solid #ff6b35;}
+    .stat-card h3 {color: #ff6b35; font-size: 2.5em; margin-bottom: 10px;}
+    .stat-card p {color: #ccc; font-size: 1.1em; margin-bottom: 5px;}
+    .search-box {width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #555; border-radius: 10px; background: #1a1a1a; color: white; font-size: 16px;}
+    .search-box:focus {outline: none; border-color: #ff6b35;}
+    .euro {color: #28a745; font-weight: bold;}
+    .status-ativo {color: #28a745; font-weight: bold;}
+    .status-inativo {color: #dc3545; font-weight: bold;}
+    .alert {padding: 15px; margin: 10px 0; border-radius: 8px; font-weight: bold;}
+    .alert-success {background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745;}
+    .alert-error {background: rgba(220, 53, 69, 0.2); border: 1px solid #dc3545; color: #dc3545;}
+    @media (max-width: 768px) {
+        .form-grid {grid-template-columns: 1fr;}
+        .tabs {flex-direction: column;}
+        .header h1 {font-size: 1.8em;}
+    }
 </style>
 </head>
 <body>
@@ -280,22 +68,10 @@
 <!-- Dashboard -->
 <div class="tab-content active" id="dashboard">
 <div class="stats">
-<div class="stat-card">
-<h3 id="totalAlunos">0</h3>
-<p>Total de Alunos</p>
-</div>
-<div class="stat-card">
-<h3 id="totalProfessores">0</h3>
-<p>Professores</p>
-</div>
-<div class="stat-card">
-<h3 id="totalAulas">0</h3>
-<p>Aulas Este Mês</p>
-</div>
-<div class="stat-card">
-<h3 class="euro" id="receitaMensal">€0</h3>
-<p>Receita Mensal</p>
-</div>
+<div class="stat-card"><h3 id="totalAlunos">0</h3><p>Total de Alunos</p></div>
+<div class="stat-card"><h3 id="totalProfessores">0</h3><p>Professores</p></div>
+<div class="stat-card"><h3 id="totalAulas">0</h3><p>Aulas Este Mês</p></div>
+<div class="stat-card"><h3 class="euro" id="receitaMensal">€0</h3><p>Receita Mensal</p></div>
 </div>
 <div class="table-container">
 <h2 style="padding: 20px; color: #ff6b35;">Próximas Aulas</h2>
@@ -323,24 +99,11 @@ Nenhuma aula agendada
 <div class="tab-content" id="alunos">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Gestão de Alunos</h2>
 <div class="form-grid">
-<div class="form-group">
-<label>Nome Completo</label>
-<input id="nomeAluno" placeholder="Nome do aluno" type="text"/>
-</div>
-<div class="form-group">
-<label>Email</label>
-<input id="emailAluno" placeholder="email@exemplo.com" type="email"/>
-</div>
-<div class="form-group">
-<label>Telefone</label>
-<input id="telefoneAluno" placeholder="+351 xxx xxx xxx" type="tel"/>
-</div>
-<div class="form-group">
-<label>Data de Nascimento</label>
-<input id="nascimentoAluno" type="date"/>
-</div>
-<div class="form-group">
-<label>Instrumento Principal</label>
+<div class="form-group"><label>Nome Completo</label><input id="nomeAluno" placeholder="Nome do aluno" type="text"/></div>
+<div class="form-group"><label>Email</label><input id="emailAluno" placeholder="email@exemplo.com" type="email"/></div>
+<div class="form-group"><label>Telefone</label><input id="telefoneAluno" placeholder="+351 xxx xxx xxx" type="tel"/></div>
+<div class="form-group"><label>Data de Nascimento</label><input id="nascimentoAluno" type="date"/></div>
+<div class="form-group"><label>Instrumento Principal</label>
 <select id="instrumentoAluno">
 <option value="">Selecione...</option>
 <option value="Guitarra">Guitarra Elétrica</option>
@@ -354,10 +117,7 @@ Nenhuma aula agendada
 <option value="Cavaquinho">Cavaquinho</option>
 </select>
 </div>
-<div class="form-group">
-<label>Mensalidade (€)</label>
-<input id="mensalidadeAluno" min="0" placeholder="50.00" step="0.01" type="number"/>
-</div>
+<div class="form-group"><label>Mensalidade (€)</label><input id="mensalidadeAluno" min="0" placeholder="50.00" step="0.01" type="number"/></div>
 </div>
 <div style="text-align: center;">
 <button class="btn" onclick="adicionarAluno()">Adicionar Aluno</button>
@@ -377,8 +137,7 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaAlunos">
-</tbody>
+<tbody id="tabelaAlunos"></tbody>
 </table>
 </div>
 </div>
@@ -386,20 +145,10 @@ Nenhuma aula agendada
 <div class="tab-content" id="professores">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Gestão de Professores</h2>
 <div class="form-grid">
-<div class="form-group">
-<label>Nome Completo</label>
-<input id="nomeProfessor" placeholder="Nome do professor" type="text"/>
-</div>
-<div class="form-group">
-<label>Email</label>
-<input id="emailProfessor" placeholder="email@exemplo.com" type="email"/>
-</div>
-<div class="form-group">
-<label>Telefone</label>
-<input id="telefoneProfessor" placeholder="+351 xxx xxx xxx" type="tel"/>
-</div>
-<div class="form-group">
-<label>Especialidade</label>
+<div class="form-group"><label>Nome Completo</label><input id="nomeProfessor" placeholder="Nome do professor" type="text"/></div>
+<div class="form-group"><label>Email</label><input id="emailProfessor" placeholder="email@exemplo.com" type="email"/></div>
+<div class="form-group"><label>Telefone</label><input id="telefoneProfessor" placeholder="+351 xxx xxx xxx" type="tel"/></div>
+<div class="form-group"><label>Especialidade</label>
 <select id="especialidadeProfessor">
 <option value="">Selecione...</option>
 <option value="Guitarra">Guitarra Elétrica</option>
@@ -413,10 +162,7 @@ Nenhuma aula agendada
 <option value="Cavaquinho">Cavaquinho</option>
 </select>
 </div>
-<div class="form-group">
-<label>Valor por Aula (€)</label>
-<input id="valorAulaProfessor" min="0" placeholder="25.00" step="0.01" type="number"/>
-</div>
+<div class="form-group"><label>Valor por Aula (€)</label><input id="valorAulaProfessor" min="0" placeholder="25.00" step="0.01" type="number"/></div>
 </div>
 <div style="text-align: center;">
 <button class="btn" onclick="adicionarProfessor()">Adicionar Professor</button>
@@ -436,8 +182,7 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaProfessores">
-</tbody>
+<tbody id="tabelaProfessores"></tbody>
 </table>
 </div>
 </div>
@@ -445,28 +190,11 @@ Nenhuma aula agendada
 <div class="tab-content" id="aulas">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Agendamento de Aulas</h2>
 <div class="form-grid">
-<div class="form-group">
-<label>Aluno</label>
-<select id="alunoAula">
-<option value="">Selecione um aluno...</option>
-</select>
-</div>
-<div class="form-group">
-<label>Professor</label>
-<select id="professorAula">
-<option value="">Selecione um professor...</option>
-</select>
-</div>
-<div class="form-group">
-<label>Data</label>
-<input id="dataAula" type="date"/>
-</div>
-<div class="form-group">
-<label>Horário</label>
-<input id="horarioAula" type="time"/>
-</div>
-<div class="form-group">
-<label>Duração (minutos)</label>
+<div class="form-group"><label>Aluno</label><select id="alunoAula"><option value="">Selecione um aluno...</option></select></div>
+<div class="form-group"><label>Professor</label><select id="professorAula"><option value="">Selecione um professor...</option></select></div>
+<div class="form-group"><label>Data</label><input id="dataAula" type="date"/></div>
+<div class="form-group"><label>Horário</label><input id="horarioAula" type="time"/></div>
+<div class="form-group"><label>Duração (minutos)</label>
 <select id="duracaoAula">
 <option value="30">30 minutos</option>
 <option value="45">45 minutos</option>
@@ -474,10 +202,7 @@ Nenhuma aula agendada
 <option value="90">90 minutos</option>
 </select>
 </div>
-<div class="form-group">
-<label>Valor da Aula (€)</label>
-<input id="valorAula" min="0" placeholder="25.00" step="0.01" type="number"/>
-</div>
+<div class="form-group"><label>Valor da Aula (€)</label><input id="valorAula" min="0" placeholder="25.00" step="0.01" type="number"/></div>
 </div>
 <div style="text-align: center;">
 <button class="btn" onclick="agendarAula()">Agendar Aula</button>
@@ -497,36 +222,19 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaAulas">
-</tbody>
+<tbody id="tabelaAulas"></tbody>
 </table>
 </div>
 </div>
 <!-- Pagamentos -->
 <div class="tab-content" id="pagamentos">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Controle de Pagamentos</h2>
-<!-- Pagamento de alunos -->
 <div class="form-grid">
-<div class="form-group">
-<label>Aluno</label>
-<select id="alunoPagamento">
-<option value="">Selecione um aluno...</option>
-</select>
-</div>
-<div class="form-group">
-<label>Valor (€)</label>
-<input id="valorPagamento" min="0" placeholder="50.00" step="0.01" type="number"/>
-</div>
-<div class="form-group">
-<label>Data do Pagamento</label>
-<input id="dataPagamento" type="date"/>
-</div>
-<div class="form-group">
-<label>Mês de Referência</label>
-<input id="mesReferencia" type="month"/>
-</div>
-<div class="form-group">
-<label>Método de Pagamento</label>
+<div class="form-group"><label>Aluno</label><select id="alunoPagamento"><option value="">Selecione um aluno...</option></select></div>
+<div class="form-group"><label>Valor (€)</label><input id="valorPagamento" min="0" placeholder="50.00" step="0.01" type="number"/></div>
+<div class="form-group"><label>Data do Pagamento</label><input id="dataPagamento" type="date"/></div>
+<div class="form-group"><label>Mês de Referência</label><input id="mesReferencia" type="month"/></div>
+<div class="form-group"><label>Método de Pagamento</label>
 <select id="metodoPagamento">
 <option value="Dinheiro">Dinheiro</option>
 <option value="Transferência">Transferência</option>
@@ -552,8 +260,7 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaPagamentos">
-</tbody>
+<tbody id="tabelaPagamentos"></tbody>
 </table>
 </div>
 <!-- Pagamento a Professores -->
@@ -561,9 +268,7 @@ Nenhuma aula agendada
 <div class="form-grid">
     <div class="form-group">
         <label>Professor</label>
-        <select id="professorPagamento">
-            <option value="">Selecione um professor...</option>
-        </select>
+        <select id="professorPagamento"><option value="">Selecione um professor...</option></select>
     </div>
     <div class="form-group">
         <label>Valor (€)</label>
@@ -604,8 +309,7 @@ Nenhuma aula agendada
                 <th>Ações</th>
             </tr>
         </thead>
-        <tbody id="tabelaPagamentosProfessores">
-        </tbody>
+        <tbody id="tabelaPagamentosProfessores"></tbody>
     </table>
 </div>
 </div>
@@ -613,22 +317,10 @@ Nenhuma aula agendada
 <div class="tab-content" id="relatorios">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Relatórios e Estatísticas</h2>
 <div class="stats">
-<div class="stat-card">
-<h3 class="euro" id="receitaTotal">€0</h3>
-<p>Receita Total</p>
-</div>
-<div class="stat-card">
-<h3 id="aulasRealizadas">0</h3>
-<p>Aulas Realizadas</p>
-</div>
-<div class="stat-card">
-<h3 id="alunosAtivos">0</h3>
-<p>Alunos Ativos</p>
-</div>
-<div class="stat-card">
-<h3 class="euro" id="mediaMensal">€0</h3>
-<p>Média Mensal</p>
-</div>
+<div class="stat-card"><h3 class="euro" id="receitaTotal">€0</h3><p>Receita Total</p></div>
+<div class="stat-card"><h3 id="aulasRealizadas">0</h3><p>Aulas Realizadas</p></div>
+<div class="stat-card"><h3 id="alunosAtivos">0</h3><p>Alunos Ativos</p></div>
+<div class="stat-card"><h3 class="euro" id="mediaMensal">€0</h3><p>Média Mensal</p></div>
 </div>
 <div style="text-align: center; margin-bottom: 30px;">
 <button class="btn" onclick="gerarRelatorioMensal()">Relatório Mensal</button>
@@ -636,9 +328,9 @@ Nenhuma aula agendada
 </div>
 </div>
 </div>
-<!-- Scripts -->
+<!-- SCRIPTS -->
 <script>
-// Funções para tabs (já existentes)
+// Função para tabs
 function showTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
@@ -646,7 +338,152 @@ function showTab(tabId) {
     document.querySelector('.tab[onclick="showTab(\''+tabId+'\')"]').classList.add('active');
 }
 
-// Funções para pagamentos a professores
+// -------- ALUNOS --------
+function atualizarTabelaAlunos() {
+    const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
+    const tabela = document.getElementById('tabelaAlunos');
+    tabela.innerHTML = '';
+    alunos.forEach((aluno, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${aluno.nome}</td>
+            <td>${aluno.email}</td>
+            <td>${aluno.telefone}</td>
+            <td>${aluno.instrumento}</td>
+            <td>${aluno.mensalidade}</td>
+            <td class="status-ativo">Ativo</td>
+            <td>
+                <button class="btn btn-danger" onclick="removerAluno(${i})">Remover</button>
+            </td>
+        `;
+        tabela.appendChild(tr);
+    });
+    atualizarSelectAlunos();
+}
+
+function atualizarSelectAlunos() {
+    const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
+    const selects = [document.getElementById('alunoAula'), document.getElementById('alunoPagamento')];
+    selects.forEach(select => {
+        if (!select) return;
+        select.innerHTML = '<option value="">Selecione um aluno...</option>';
+        alunos.forEach(aluno => {
+            const opt = document.createElement('option');
+            opt.value = aluno.nome;
+            opt.innerText = aluno.nome;
+            select.appendChild(opt);
+        });
+    });
+}
+
+function adicionarAluno() {
+    const nome = document.getElementById('nomeAluno').value;
+    const email = document.getElementById('emailAluno').value;
+    const telefone = document.getElementById('telefoneAluno').value;
+    const nascimento = document.getElementById('nascimentoAluno').value;
+    const instrumento = document.getElementById('instrumentoAluno').value;
+    const mensalidade = document.getElementById('mensalidadeAluno').value;
+    if (!nome || !email) {
+        alert('Preencha todos os campos obrigatórios!');
+        return;
+    }
+    const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
+    alunos.push({nome, email, telefone, nascimento, instrumento, mensalidade});
+    localStorage.setItem('alunos', JSON.stringify(alunos));
+    atualizarTabelaAlunos();
+    limparFormAluno();
+}
+
+function limparFormAluno() {
+    document.getElementById('nomeAluno').value = '';
+    document.getElementById('emailAluno').value = '';
+    document.getElementById('telefoneAluno').value = '';
+    document.getElementById('nascimentoAluno').value = '';
+    document.getElementById('instrumentoAluno').value = '';
+    document.getElementById('mensalidadeAluno').value = '';
+}
+
+function removerAluno(i) {
+    const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
+    alunos.splice(i, 1);
+    localStorage.setItem('alunos', JSON.stringify(alunos));
+    atualizarTabelaAlunos();
+}
+
+// -------- PROFESSORES --------
+function atualizarTabelaProfessores() {
+    const professores = JSON.parse(localStorage.getItem('professores') || '[]');
+    const tabela = document.getElementById('tabelaProfessores');
+    tabela.innerHTML = '';
+    professores.forEach((prof, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${prof.nome}</td>
+            <td>${prof.email}</td>
+            <td>${prof.telefone}</td>
+            <td>${prof.especialidade}</td>
+            <td>${prof.valorAula}</td>
+            <td class="status-ativo">Ativo</td>
+            <td>
+                <button class="btn btn-danger" onclick="removerProfessor(${i})">Remover</button>
+            </td>
+        `;
+        tabela.appendChild(tr);
+    });
+    atualizarSelectProfessores();
+}
+
+function atualizarSelectProfessores() {
+    const professores = JSON.parse(localStorage.getItem('professores') || '[]');
+    const selects = [
+        document.getElementById('professorAula'),
+        document.getElementById('professorPagamento')
+    ];
+    selects.forEach(select => {
+        if (!select) return;
+        select.innerHTML = '<option value="">Selecione um professor...</option>';
+        professores.forEach(prof => {
+            const opt = document.createElement('option');
+            opt.value = prof.nome;
+            opt.innerText = prof.nome;
+            select.appendChild(opt);
+        });
+    });
+}
+
+function adicionarProfessor() {
+    const nome = document.getElementById('nomeProfessor').value;
+    const email = document.getElementById('emailProfessor').value;
+    const telefone = document.getElementById('telefoneProfessor').value;
+    const especialidade = document.getElementById('especialidadeProfessor').value;
+    const valorAula = document.getElementById('valorAulaProfessor').value;
+    if (!nome || !email) {
+        alert('Preencha todos os campos obrigatórios!');
+        return;
+    }
+    const professores = JSON.parse(localStorage.getItem('professores') || '[]');
+    professores.push({nome, email, telefone, especialidade, valorAula});
+    localStorage.setItem('professores', JSON.stringify(professores));
+    atualizarTabelaProfessores();
+    limparFormProfessor();
+}
+
+function limparFormProfessor() {
+    document.getElementById('nomeProfessor').value = '';
+    document.getElementById('emailProfessor').value = '';
+    document.getElementById('telefoneProfessor').value = '';
+    document.getElementById('especialidadeProfessor').value = '';
+    document.getElementById('valorAulaProfessor').value = '';
+}
+
+function removerProfessor(i) {
+    const professores = JSON.parse(localStorage.getItem('professores') || '[]');
+    professores.splice(i, 1);
+    localStorage.setItem('professores', JSON.stringify(professores));
+    atualizarTabelaProfessores();
+}
+
+// -------- PAGAMENTOS A PROFESSORES --------
 function registrarPagamentoProfessor() {
     const professor = document.getElementById('professorPagamento').value;
     const valor = document.getElementById('valorPagamentoProfessor').value;
@@ -659,15 +496,10 @@ function registrarPagamentoProfessor() {
         return;
     }
 
-    const tabela = document.getElementById('tabelaPagamentosProfessores');
-    const row = tabela.insertRow();
-    row.insertCell(0).innerText = data;
-    row.insertCell(1).innerText = professor;
-    row.insertCell(2).innerText = valor;
-    row.insertCell(3).innerText = referencia;
-    row.insertCell(4).innerText = metodo;
-    row.insertCell(5).innerHTML = '<button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">Remover</button>';
-
+    const pagamentos = JSON.parse(localStorage.getItem('pagamentosProfessores') || '[]');
+    pagamentos.push({professor, valor, data, referencia, metodo});
+    localStorage.setItem('pagamentosProfessores', JSON.stringify(pagamentos));
+    atualizarTabelaPagamentosProfessores();
     limparFormPagamentoProfessor();
 }
 
@@ -679,22 +511,37 @@ function limparFormPagamentoProfessor() {
     document.getElementById('metodoPagamentoProfessor').value = 'Dinheiro';
 }
 
-// Preencher select de professores automaticamente
-function atualizarSelectProfessoresPagamento() {
-    const select = document.getElementById('professorPagamento');
-    if (!select) return;
-    const professores = JSON.parse(localStorage.getItem('professores') || '[]');
-    select.innerHTML = '<option value="">Selecione um professor...</option>';
-    professores.forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.nome;
-        opt.innerText = p.nome;
-        select.appendChild(opt);
+function atualizarTabelaPagamentosProfessores() {
+    const pagamentos = JSON.parse(localStorage.getItem('pagamentosProfessores') || '[]');
+    const tabela = document.getElementById('tabelaPagamentosProfessores');
+    tabela.innerHTML = '';
+    pagamentos.forEach((p, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${p.data}</td>
+            <td>${p.professor}</td>
+            <td>${p.valor}</td>
+            <td>${p.referencia}</td>
+            <td>${p.metodo}</td>
+            <td><button class="btn btn-danger" onclick="removerPagamentoProfessor(${i})">Remover</button></td>
+        `;
+        tabela.appendChild(tr);
     });
 }
-document.addEventListener('DOMContentLoaded', atualizarSelectProfessoresPagamento);
 
-// ... resto dos teus scripts para alunos, professores, aulas, pagamentos de alunos, etc ...
+function removerPagamentoProfessor(i) {
+    const pagamentos = JSON.parse(localStorage.getItem('pagamentosProfessores') || '[]');
+    pagamentos.splice(i, 1);
+    localStorage.setItem('pagamentosProfessores', JSON.stringify(pagamentos));
+    atualizarTabelaPagamentosProfessores();
+}
+
+// -------- AO CARREGAR A PÁGINA --------
+document.addEventListener('DOMContentLoaded', function() {
+    atualizarTabelaAlunos();
+    atualizarTabelaProfessores();
+    atualizarTabelaPagamentosProfessores();
+});
 </script>
 </body>
 </html>
