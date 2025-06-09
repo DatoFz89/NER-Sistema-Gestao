@@ -1301,29 +1301,28 @@ Relatório gerado em: ${new Date().toLocaleString('pt-PT')}
         }
 
         // PERSISTÊNCIA DE DADOS
-       function salvarDados() {
-    const dados = {
+		function salvarDados() {
+		const dados = {
         alunos,
         professores,
         aulas,
         pagamentos,
         contadorIds
-    };
-    localStorage.setItem('nerDados', JSON.stringify(dados));
-}
+		};
+			localStorage.setItem('nerDados', JSON.stringify(dados));
+		}
 
         function carregarDados() {
-    const dadosSalvos = localStorage.getItem('nerDados');
-    if (dadosSalvos) {
+			const dadosSalvos = localStorage.getItem('nerDados');
+			if (dadosSalvos) {
         const dados = JSON.parse(dadosSalvos);
         alunos = dados.alunos || [];
         professores = dados.professores || [];
         aulas = dados.aulas || [];
         pagamentos = dados.pagamentos || [];
         contadorIds = dados.contadorIds || { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
-    }
-}
-            ];
+			}
+		}
             
             professores = [
                 {
