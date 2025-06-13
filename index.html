@@ -1,54 +1,271 @@
 <!DOCTYPE html>
+
 <html lang="pt">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NER - Nova Escola Rock</title>
 <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    body {font-family: Arial, sans-serif; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: #fff; min-height: 100vh;}
-    .header {background: linear-gradient(90deg, #ff6b35, #f7931e); padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);}
-    .header h1 {font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
-    .header p {font-size: 1.2em; opacity: 0.9;}
-    .container {max-width: 1400px; margin: 0 auto; padding: 20px;}
-    .tabs {display: flex; background: #333; border-radius: 10px 10px 0 0; overflow: hidden; margin-bottom: 0;}
-    .tab {flex: 1; padding: 15px 20px; background: #444; color: #ccc; cursor: pointer; transition: all 0.3s ease; border: none; font-size: 16px;}
-    .tab.active {background: #ff6b35; color: white;}
-    .tab:hover:not(.active) {background: #555; color: white;}
-    .tab-content {display: none; background: #2a2a2a; border-radius: 0 0 10px 10px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.3);}
-    .tab-content.active {display: block;}
-    .form-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;}
-    .form-group {display: flex; flex-direction: column;}
-    .form-group label {margin-bottom: 8px; font-weight: bold; color: #ff6b35;}
-    .form-group input, .form-group select {padding: 12px; border: 2px solid #555; border-radius: 8px; background: #1a1a1a; color: white; font-size: 16px; transition: border-color 0.3s ease;}
-    .form-group input:focus, .form-group select:focus {outline: none; border-color: #ff6b35;}
-    .btn {padding: 12px 25px; background: linear-gradient(45deg, #ff6b35, #f7931e); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: all 0.3s ease; margin: 5px;}
-    .btn:hover {transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);}
-    .btn-danger {background: linear-gradient(45deg, #dc3545, #c82333);}
-    .btn-danger:hover {box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);}
-    .table-container {background: #1a1a1a; border-radius: 10px; overflow: hidden; margin-top: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);}
-    table {width: 100%; border-collapse: collapse;}
-    th {background: #ff6b35; color: white; padding: 15px 10px; text-align: left; font-weight: bold;}
-    td {padding: 12px 10px; border-bottom: 1px solid #333; color: #ccc;}
-    tr:hover {background: #333;}
-    .stats {display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;}
-    .stat-card {background: linear-gradient(135deg, #333, #444); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 2px solid #ff6b35;}
-    .stat-card h3 {color: #ff6b35; font-size: 2.5em; margin-bottom: 10px;}
-    .stat-card p {color: #ccc; font-size: 1.1em; margin-bottom: 5px;}
-    .search-box {width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #555; border-radius: 10px; background: #1a1a1a; color: white; font-size: 16px;}
-    .search-box:focus {outline: none; border-color: #ff6b35;}
-    .euro {color: #28a745; font-weight: bold;}
-    .status-ativo {color: #28a745; font-weight: bold;}
-    .status-inativo {color: #dc3545; font-weight: bold;}
-    .alert {padding: 15px; margin: 10px 0; border-radius: 8px; font-weight: bold;}
-    .alert-success {background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745;}
-    .alert-error {background: rgba(220, 53, 69, 0.2); border: 1px solid #dc3545; color: #dc3545;}
-    @media (max-width: 768px) {
-        .form-grid {grid-template-columns: 1fr;}
-        .tabs {flex-direction: column;}
-        .header h1 {font-size: 1.8em;}
-    }
-</style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #333;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: #444;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+        }
+
+        .tab.active {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #555;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: #2a2a2a;
+            border-radius: 0 0 10px 10px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .table-container {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #ff6b35;
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+        }
+
+        tr:hover {
+            background: #333;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #333, #444);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 2px solid #ff6b35;
+        }
+
+        .stat-card h3 {
+            color: #ff6b35;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            color: #ccc;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #555;
+            border-radius: 10px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 16px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .euro {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-ativo {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-inativo {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid #28a745;
+            color: #28a745;
+        }
+
+        .alert-error {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid #dc3545;
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="header">
@@ -67,10 +284,22 @@
 <!-- Dashboard -->
 <div class="tab-content active" id="dashboard">
 <div class="stats">
-<div class="stat-card"><h3 id="totalAlunos">0</h3><p>Total de Alunos</p></div>
-<div class="stat-card"><h3 id="totalProfessores">0</h3><p>Professores</p></div>
-<div class="stat-card"><h3 id="totalAulas">0</h3><p>Aulas Este Mês</p></div>
-<div class="stat-card"><h3 class="euro" id="receitaMensal">€0</h3><p>Receita Mensal</p></div>
+<div class="stat-card">
+<h3 id="totalAlunos">0</h3>
+<p>Total de Alunos</p>
+</div>
+<div class="stat-card">
+<h3 id="totalProfessores">0</h3>
+<p>Professores</p>
+</div>
+<div class="stat-card">
+<h3 id="totalAulas">0</h3>
+<p>Aulas Este Mês</p>
+</div>
+<div class="stat-card">
+<h3 class="euro" id="receitaMensal">€0</h3>
+<p>Receita Mensal</p>
+</div>
 </div>
 <div class="table-container">
 <h2 style="padding: 20px; color: #ff6b35;">Próximas Aulas</h2>
@@ -87,8 +316,8 @@
 <tbody id="proximasAulas">
 <tr>
 <td colspan="5" style="text-align: center; padding: 30px; color: #666;">
-Nenhuma aula agendada
-</td>
+                                Nenhuma aula agendada
+                            </td>
 </tr>
 </tbody>
 </table>
@@ -98,25 +327,30 @@ Nenhuma aula agendada
 <div class="tab-content" id="alunos">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Gestão de Alunos</h2>
 <div class="form-grid">
-<div class="form-group"><label>Nome Completo</label><input id="nomeAluno" placeholder="Nome do aluno" type="text"/></div>
-<div class="form-group"><label>Email</label><input id="emailAluno" placeholder="email@exemplo.com" type="email"/></div>
-<div class="form-group"><label>Telefone</label><input id="telefoneAluno" placeholder="+351 xxx xxx xxx" type="tel"/></div>
-<div class="form-group"><label>Data de Nascimento</label><input id="nascimentoAluno" type="date"/></div>
-<div class="form-group"><label>Instrumento Principal</label>
-<select id="instrumentoAluno">
-<option value="">Selecione...</option>
-<option value="Guitarra">Guitarra Elétrica</option>
-<option value="Baixo">Baixo</option>
-<option value="Bateria">Bateria</option>
-<option value="Teclado">Teclado</option>
-<option value="Vocal">Canto</option>
-<option value="Violão">Guitarra Clássica</option>
-<option value="Piano">Piano</option>
-<option value="Acordeão/Concertina">Acordeão/Concertina</option>
-<option value="Cavaquinho">Cavaquinho</option>
-</select>
+<div class="form-group">
+<label>Nome Completo</label>
+<input id="nomeAluno" placeholder="Nome do aluno" type="text"/>
 </div>
-<div class="form-group"><label>Mensalidade (€)</label><input id="mensalidadeAluno" min="0" placeholder="50.00" step="0.01" type="number"/></div>
+<div class="form-group">
+<label>Email</label>
+<input id="emailAluno" placeholder="email@exemplo.com" type="email"/>
+</div>
+<div class="form-group">
+<label>Telefone</label>
+<input id="telefoneAluno" placeholder="+351 xxx xxx xxx" type="tel"/>
+</div>
+<div class="form-group">
+<label>Data de Nascimento</label>
+<input id="nascimentoAluno" type="date"/>
+</div>
+<div class="form-group">
+<label>Instrumento Principal</label>
+<select id="instrumentoAluno"><option value="">Selecione...</option><option value="Guitarra">Guitarra Elétrica</option><option value="Baixo">Baixo</option><option value="Bateria">Bateria</option><option value="Teclado">Teclado</option><option value="Vocal">Canto</option><option value="Violão">Guitarra Clássica</option><option value="Piano">Piano</option><option value="Acordeão/Concertina">Acordeão/Concertina</option><option value="Cavaquinho">Cavaquinho</option></select>
+</div>
+<div class="form-group">
+<label>Mensalidade (€)</label>
+<input id="mensalidadeAluno" min="0" placeholder="50.00" step="0.01" type="number"/>
+</div>
 </div>
 <div style="text-align: center;">
 <button class="btn" onclick="adicionarAluno()">Adicionar Aluno</button>
@@ -136,7 +370,8 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaAlunos"></tbody>
+<tbody id="tabelaAlunos">
+</tbody>
 </table>
 </div>
 </div>
@@ -144,24 +379,26 @@ Nenhuma aula agendada
 <div class="tab-content" id="professores">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Gestão de Professores</h2>
 <div class="form-grid">
-<div class="form-group"><label>Nome Completo</label><input id="nomeProfessor" placeholder="Nome do professor" type="text"/></div>
-<div class="form-group"><label>Email</label><input id="emailProfessor" placeholder="email@exemplo.com" type="email"/></div>
-<div class="form-group"><label>Telefone</label><input id="telefoneProfessor" placeholder="+351 xxx xxx xxx" type="tel"/></div>
-<div class="form-group"><label>Especialidade</label>
-<select id="especialidadeProfessor">
-<option value="">Selecione...</option>
-<option value="Guitarra">Guitarra Elétrica</option>
-<option value="Baixo">Baixo</option>
-<option value="Bateria">Bateria</option>
-<option value="Teclado">Teclado</option>
-<option value="Vocal">Canto</option>
-<option value="Violão">Guitarra Clássica</option>
-<option value="Piano">Piano</option>
-<option value="Acordeão/Concertina">Acordeão/Concertina</option>
-<option value="Cavaquinho">Cavaquinho</option>
-</select>
+<div class="form-group">
+<label>Nome Completo</label>
+<input id="nomeProfessor" placeholder="Nome do professor" type="text"/>
 </div>
-<div class="form-group"><label>Valor por Aula (€)</label><input id="valorAulaProfessor" min="0" placeholder="25.00" step="0.01" type="number"/></div>
+<div class="form-group">
+<label>Email</label>
+<input id="emailProfessor" placeholder="email@exemplo.com" type="email"/>
+</div>
+<div class="form-group">
+<label>Telefone</label>
+<input id="telefoneProfessor" placeholder="+351 xxx xxx xxx" type="tel"/>
+</div>
+<div class="form-group">
+<label>Especialidade</label>
+<select id="especialidadeProfessor"><option value="">Selecione...</option><option value="Guitarra">Guitarra Elétrica</option><option value="Baixo">Baixo</option><option value="Bateria">Bateria</option><option value="Teclado">Teclado</option><option value="Vocal">Canto</option><option value="Violão">Guitarra Clássica</option><option value="Piano">Piano</option><option value="Acordeão/Concertina">Acordeão/Concertina</option><option value="Cavaquinho">Cavaquinho</option></select>
+</div>
+<div class="form-group">
+<label>Valor por Aula (€)</label>
+<input id="valorAulaProfessor" min="0" placeholder="25.00" step="0.01" type="number"/>
+</div>
 </div>
 <div style="text-align: center;">
 <button class="btn" onclick="adicionarProfessor()">Adicionar Professor</button>
@@ -181,7 +418,8 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaProfessores"></tbody>
+<tbody id="tabelaProfessores">
+</tbody>
 </table>
 </div>
 </div>
@@ -189,11 +427,28 @@ Nenhuma aula agendada
 <div class="tab-content" id="aulas">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Agendamento de Aulas</h2>
 <div class="form-grid">
-<div class="form-group"><label>Aluno</label><select id="alunoAula"><option value="">Selecione um aluno...</option></select></div>
-<div class="form-group"><label>Professor</label><select id="professorAula"><option value="">Selecione um professor...</option></select></div>
-<div class="form-group"><label>Data</label><input id="dataAula" type="date"/></div>
-<div class="form-group"><label>Horário</label><input id="horarioAula" type="time"/></div>
-<div class="form-group"><label>Duração (minutos)</label>
+<div class="form-group">
+<label>Aluno</label>
+<select id="alunoAula">
+<option value="">Selecione um aluno...</option>
+</select>
+</div>
+<div class="form-group">
+<label>Professor</label>
+<select id="professorAula">
+<option value="">Selecione um professor...</option>
+</select>
+</div>
+<div class="form-group">
+<label>Data</label>
+<input id="dataAula" type="date"/>
+</div>
+<div class="form-group">
+<label>Horário</label>
+<input id="horarioAula" type="time"/>
+</div>
+<div class="form-group">
+<label>Duração (minutos)</label>
 <select id="duracaoAula">
 <option value="30">30 minutos</option>
 <option value="45">45 minutos</option>
@@ -201,7 +456,10 @@ Nenhuma aula agendada
 <option value="90">90 minutos</option>
 </select>
 </div>
-<div class="form-group"><label>Valor da Aula (€)</label><input id="valorAula" min="0" placeholder="25.00" step="0.01" type="number"/></div>
+<div class="form-group">
+<label>Valor da Aula (€)</label>
+<input id="valorAula" min="0" placeholder="25.00" step="0.01" type="number"/>
+</div>
 </div>
 <div style="text-align: center;">
 <button class="btn" onclick="agendarAula()">Agendar Aula</button>
@@ -221,7 +479,8 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaAulas"></tbody>
+<tbody id="tabelaAulas">
+</tbody>
 </table>
 </div>
 </div>
@@ -229,11 +488,26 @@ Nenhuma aula agendada
 <div class="tab-content" id="pagamentos">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Controle de Pagamentos</h2>
 <div class="form-grid">
-<div class="form-group"><label>Aluno</label><select id="alunoPagamento"><option value="">Selecione um aluno...</option></select></div>
-<div class="form-group"><label>Valor (€)</label><input id="valorPagamento" min="0" placeholder="50.00" step="0.01" type="number"/></div>
-<div class="form-group"><label>Data do Pagamento</label><input id="dataPagamento" type="date"/></div>
-<div class="form-group"><label>Mês de Referência</label><input id="mesReferencia" type="month"/></div>
-<div class="form-group"><label>Método de Pagamento</label>
+<div class="form-group">
+<label>Aluno</label>
+<select id="alunoPagamento">
+<option value="">Selecione um aluno...</option>
+</select>
+</div>
+<div class="form-group">
+<label>Valor (€)</label>
+<input id="valorPagamento" min="0" placeholder="50.00" step="0.01" type="number"/>
+</div>
+<div class="form-group">
+<label>Data do Pagamento</label>
+<input id="dataPagamento" type="date"/>
+</div>
+<div class="form-group">
+<label>Mês de Referência</label>
+<input id="mesReferencia" type="month"/>
+</div>
+<div class="form-group">
+<label>Método de Pagamento</label>
 <select id="metodoPagamento">
 <option value="Dinheiro">Dinheiro</option>
 <option value="Transferência">Transferência</option>
@@ -259,466 +533,939 @@ Nenhuma aula agendada
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaPagamentos"></tbody>
+<tbody id="tabelaPagamentos">
+</tbody>
 </table>
 </div>
-<!-- Pagamento a Professores -->
-<h3 style="color: #f7931e; margin: 30px 0 10px 0;">Pagamento a Professores</h3>
+</div>
+
+<hr style="margin: 40px 0; border: 1px solid #444;" />
+
+<h2 style="color: #ff6b35; margin-bottom: 20px;">Pagamentos a Professores</h2>
 <div class="form-grid">
-    <div class="form-group">
-        <label>Professor</label>
-        <select id="professorPagamento"><option value="">Selecione um professor...</option></select>
-    </div>
-    <div class="form-group">
-        <label>Valor (€)</label>
-        <input id="valorPagamentoProfessor" min="0" placeholder="50.00" step="0.01" type="number"/>
-    </div>
-    <div class="form-group">
-        <label>Data do Pagamento</label>
-        <input id="dataPagamentoProfessor" type="date"/>
-    </div>
-    <div class="form-group">
-        <label>Referência (Aula/Mês)</label>
-        <input id="referenciaPagamentoProfessor" placeholder="Ex: Aula 10/06 ou Junho 2025" type="text"/>
-    </div>
-    <div class="form-group">
-        <label>Método de Pagamento</label>
-        <select id="metodoPagamentoProfessor">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Transferência">Transferência</option>
-            <option value="MB Way">MB Way</option>
-            <option value="Cartão">Cartão</option>
-        </select>
-    </div>
+  <div class="form-group">
+    <label>Professor</label>
+    <select id="professorPagamento">
+      <option value="">Selecione um professor...</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Valor (€)</label>
+    <input id="valorPagamentoProfessor" type="number" step="0.01" min="0" placeholder="30.00"/>
+  </div>
+  <div class="form-group">
+    <label>Data do Pagamento</label>
+    <input id="dataPagamentoProfessor" type="date"/>
+  </div>
+  <div class="form-group">
+    <label>Mês de Referência</label>
+    <input id="mesRefPagamentoProfessor" type="month"/>
+  </div>
+  <div class="form-group">
+    <label>Método de Pagamento</label>
+    <select id="metodoPagamentoProfessor">
+      <option value="Dinheiro">Dinheiro</option>
+      <option value="Transferência">Transferência</option>
+      <option value="MB Way">MB Way</option>
+      <option value="Cartão">Cartão</option>
+    </select>
+  </div>
 </div>
 <div style="text-align: center;">
-    <button class="btn" onclick="registrarPagamentoProfessor()">Registrar Pagamento Professor</button>
-    <button class="btn" onclick="limparFormPagamentoProfessor()">Limpar Formulário</button>
+  <button class="btn" onclick="registrarPagamentoProfessor()">Registrar Pagamento</button>
+  <button class="btn" onclick="limparFormPagamentoProfessor()">Limpar Formulário</button>
 </div>
+<input class="search-box" id="searchPagamentosProfessores" onkeyup="filtrarPagamentosProfessores()" placeholder="Pesquisar pagamentos a professores..." type="text"/>
 <div class="table-container">
-    <h4 style="color: #f7931e; padding: 20px 0 10px 0;">Pagamentos a Professores</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Professor</th>
-                <th>Valor</th>
-                <th>Referência</th>
-                <th>Método</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="tabelaPagamentosProfessores"></tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Professor</th>
+        <th>Valor</th>
+        <th>Mês Ref.</th>
+        <th>Método</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaPagamentosProfessores"></tbody>
+  </table>
 </div>
-</div>
+
+
 <!-- Relatórios -->
 <div class="tab-content" id="relatorios">
 <h2 style="color: #ff6b35; margin-bottom: 20px;">Relatórios e Estatísticas</h2>
 <div class="stats">
-<div class="stat-card"><h3 class="euro" id="receitaTotal">€0</h3><p>Receita Total</p></div>
-<div class="stat-card"><h3 id="aulasRealizadas">0</h3><p>Aulas Realizadas</p></div>
-<div class="stat-card"><h3 id="alunosAtivos">0</h3><p>Alunos Ativos</p></div>
-<div class="stat-card"><h3 class="euro" id="mediaMensal">€0</h3><p>Média Mensal</p></div>
+<div class="stat-card">
+<h3 class="euro" id="receitaTotal">€0</h3>
+<p>Receita Total</p>
+</div>
+<div class="stat-card">
+<h3 id="aulasRealizadas">0</h3>
+<p>Aulas Realizadas</p>
+</div>
+<div class="stat-card">
+<h3 id="alunosAtivos">0</h3>
+<p>Alunos Ativos</p>
+</div>
+<div class="stat-card">
+<h3 class="euro" id="mediaMensal">€0</h3>
+<p>Média Mensal</p>
+</div>
 </div>
 <div style="text-align: center; margin-bottom: 30px;">
 <button class="btn" onclick="gerarRelatorioMensal()">Relatório Mensal</button>
 <button class="btn" onclick="exportarDados()">Exportar Dados</button>
+<button class="btn" onclick="limparTodosDados()">Limpar Todos os Dados</button>
+</div>
+<div class="table-container">
+<h3 style="padding: 20px; color: #ff6b35;">Resumo por Instrumento</h3>
+<table>
+<thead>
+<tr>
+<th>Instrumento</th>
+<th>Nº Alunos</th>
+<th>Receita Mensal</th>
+<th>% do Total</th>
+</tr>
+</thead>
+<tbody id="resumoInstrumentos">
+</tbody>
+</table>
 </div>
 </div>
 </div>
-<!-- SCRIPTS -->
 <script>
-// --------- Utilitários de LocalStorage ---------
-function getDados(chave) {
-    return JSON.parse(localStorage.getItem(chave) || '[]');
-}
-function setDados(chave, dados) {
-    localStorage.setItem(chave, JSON.stringify(dados));
-}
-
-// --------- Função para Tabs ---------
-function showTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    document.querySelector('.tab[onclick="showTab(\''+tabId+'\')"]').classList.add('active');
+// PERSISTÊNCIA LOCAL COM LOCALSTORAGE
+function salvarDados() {
+    const dados = {
+        alunos,
+        professores,
+        aulas,
+        pagamentos,
+        pagamentosProfessores,
+        contadorIds
+    };
+    localStorage.setItem('nerDados', JSON.stringify(dados));
 }
 
-// --------- ALUNOS ---------
-function atualizarTabelaAlunos() {
-    const alunos = getDados('alunos');
-    const tabela = document.getElementById('tabelaAlunos');
-    tabela.innerHTML = '';
-    alunos.forEach((aluno, i) => {
-        tabela.innerHTML += `
-        <tr>
-            <td>${aluno.nome}</td>
-            <td>${aluno.email}</td>
-            <td>${aluno.telefone}</td>
-            <td>${aluno.instrumento}</td>
-            <td>€${aluno.mensalidade || 0}</td>
-            <td class="${aluno.ativo !== false ? 'status-ativo' : 'status-inativo'}">${aluno.ativo !== false ? 'Ativo' : 'Inativo'}</td>
-            <td>
-                <button class="btn btn-danger" onclick="removerAluno(${i})">Remover</button>
-            </td>
-        </tr>`;
-    });
-    document.getElementById('totalAlunos').textContent = alunos.length;
-    atualizarSelectAlunos();
-}
-function adicionarAluno() {
-    const nome = document.getElementById('nomeAluno').value.trim();
-    const email = document.getElementById('emailAluno').value.trim();
-    const telefone = document.getElementById('telefoneAluno').value.trim();
-    const nascimento = document.getElementById('nascimentoAluno').value;
-    const instrumento = document.getElementById('instrumentoAluno').value;
-    const mensalidade = parseFloat(document.getElementById('mensalidadeAluno').value) || 0;
-    if (!nome || !email) return alert('Preenche todos os campos obrigatórios!');
-    const alunos = getDados('alunos');
-    alunos.push({ nome, email, telefone, nascimento, instrumento, mensalidade, ativo: true });
-    setDados('alunos', alunos);
-    atualizarTabelaAlunos();
-    limparFormAluno();
-}
-function removerAluno(idx) {
-    const alunos = getDados('alunos');
-    alunos.splice(idx, 1);
-    setDados('alunos', alunos);
-    atualizarTabelaAlunos();
-}
-function limparFormAluno() {
-    document.getElementById('nomeAluno').value = '';
-    document.getElementById('emailAluno').value = '';
-    document.getElementById('telefoneAluno').value = '';
-    document.getElementById('nascimentoAluno').value = '';
-    document.getElementById('instrumentoAluno').value = '';
-    document.getElementById('mensalidadeAluno').value = '';
-}
-function atualizarSelectAlunos() {
-    const alunos = getDados('alunos');
-    const selects = [document.getElementById('alunoAula'), document.getElementById('alunoPagamento')];
-    selects.forEach(sel => {
-        sel.innerHTML = '<option value="">Selecione um aluno...</option>';
-        alunos.forEach((a, i) => {
-            sel.innerHTML += `<option value="${i}">${a.nome}</option>`;
-        });
-    });
-}
-
-// --------- PROFESSORES ---------
-function atualizarTabelaProfessores() {
-    const professores = getDados('professores');
-    const tabela = document.getElementById('tabelaProfessores');
-    tabela.innerHTML = '';
-    professores.forEach((prof, i) => {
-        tabela.innerHTML += `
-        <tr>
-            <td>${prof.nome}</td>
-            <td>${prof.email}</td>
-            <td>${prof.telefone}</td>
-            <td>${prof.especialidade}</td>
-            <td>€${prof.valorAula || 0}</td>
-            <td class="${prof.ativo !== false ? 'status-ativo' : 'status-inativo'}">${prof.ativo !== false ? 'Ativo' : 'Inativo'}</td>
-            <td>
-                <button class="btn btn-danger" onclick="removerProfessor(${i})">Remover</button>
-            </td>
-        </tr>`;
-    });
-    document.getElementById('totalProfessores').textContent = professores.length;
-    atualizarSelectProfessores();
-}
-function adicionarProfessor() {
-    const nome = document.getElementById('nomeProfessor').value.trim();
-    const email = document.getElementById('emailProfessor').value.trim();
-    const telefone = document.getElementById('telefoneProfessor').value.trim();
-    const especialidade = document.getElementById('especialidadeProfessor').value;
-    const valorAula = parseFloat(document.getElementById('valorAulaProfessor').value) || 0;
-    if (!nome || !email) return alert('Preenche todos os campos obrigatórios!');
-    const professores = getDados('professores');
-    professores.push({ nome, email, telefone, especialidade, valorAula, ativo: true });
-    setDados('professores', professores);
-    atualizarTabelaProfessores();
-    limparFormProfessor();
-}
-function removerProfessor(idx) {
-    const professores = getDados('professores');
-    professores.splice(idx, 1);
-    setDados('professores', professores);
-    atualizarTabelaProfessores();
-}
-function limparFormProfessor() {
-    document.getElementById('nomeProfessor').value = '';
-    document.getElementById('emailProfessor').value = '';
-    document.getElementById('telefoneProfessor').value = '';
-    document.getElementById('especialidadeProfessor').value = '';
-    document.getElementById('valorAulaProfessor').value = '';
-}
-function atualizarSelectProfessores() {
-    const professores = getDados('professores');
-    const selects = [document.getElementById('professorAula'), document.getElementById('professorPagamento')];
-    selects.forEach(sel => {
-        sel.innerHTML = '<option value="">Selecione um professor...</option>';
-        professores.forEach((p, i) => {
-            sel.innerHTML += `<option value="${i}">${p.nome}</option>`;
-        });
-    });
-}
-
-// --------- AULAS ---------
-function atualizarTabelaAulas() {
-    const aulas = getDados('aulas');
-    const alunos = getDados('alunos');
-    const professores = getDados('professores');
-    const tabela = document.getElementById('tabelaAulas');
-    tabela.innerHTML = '';
-    aulas.forEach((aula, i) => {
-        const aluno = alunos[aula.aluno];
-        const professor = professores[aula.professor];
-        tabela.innerHTML += `
-        <tr>
-            <td>${aula.data} ${aula.hora}</td>
-            <td>${aluno ? aluno.nome : ''}</td>
-            <td>${professor ? professor.nome : ''}</td>
-            <td>${aula.duracao} min</td>
-            <td>€${aula.valor || 0}</td>
-            <td class="status-ativo">Agendada</td>
-            <td>
-                <button class="btn btn-danger" onclick="removerAula(${i})">Remover</button>
-            </td>
-        </tr>`;
-    });
-    document.getElementById('totalAulas').textContent = aulas.length;
-    atualizarProximasAulas();
-}
-function agendarAula() {
-    const aluno = document.getElementById('alunoAula').value;
-    const professor = document.getElementById('professorAula').value;
-    const data = document.getElementById('dataAula').value;
-    const hora = document.getElementById('horarioAula').value;
-    const duracao = document.getElementById('duracaoAula').value;
-    const valor = parseFloat(document.getElementById('valorAula').value) || 0;
-    if (!aluno || !professor || !data || !hora) return alert('Preenche todos os campos obrigatórios!');
-    const aulas = getDados('aulas');
-    aulas.push({ aluno, professor, data, hora, duracao, valor });
-    setDados('aulas', aulas);
-    atualizarTabelaAulas();
-    limparFormAula();
-}
-function removerAula(idx) {
-    const aulas = getDados('aulas');
-    aulas.splice(idx, 1);
-    setDados('aulas', aulas);
-    atualizarTabelaAulas();
-}
-function limparFormAula() {
-    document.getElementById('alunoAula').value = '';
-    document.getElementById('professorAula').value = '';
-    document.getElementById('dataAula').value = '';
-    document.getElementById('horarioAula').value = '';
-    document.getElementById('duracaoAula').value = '60';
-    document.getElementById('valorAula').value = '';
-}
-
-// --------- PAGAMENTOS ---------
-function atualizarTabelaPagamentos() {
-    const pagamentos = getDados('pagamentos');
-    const alunos = getDados('alunos');
-    const tabela = document.getElementById('tabelaPagamentos');
-    tabela.innerHTML = '';
-    pagamentos.forEach((pag, i) => {
-        const aluno = alunos[pag.aluno];
-        tabela.innerHTML += `
-        <tr>
-            <td>${pag.data}</td>
-            <td>${aluno ? aluno.nome : ''}</td>
-            <td>€${pag.valor || 0}</td>
-            <td>${pag.mesReferencia || ''}</td>
-            <td>${pag.metodo || ''}</td>
-            <td>
-                <button class="btn btn-danger" onclick="removerPagamento(${i})">Remover</button>
-            </td>
-        </tr>`;
-    });
-}
-function registrarPagamento() {
-    const aluno = document.getElementById('alunoPagamento').value;
-    const valor = parseFloat(document.getElementById('valorPagamento').value) || 0;
-    const data = document.getElementById('dataPagamento').value;
-    const mesReferencia = document.getElementById('mesReferencia').value;
-    const metodo = document.getElementById('metodoPagamento').value;
-    if (!aluno || !valor || !data) return alert('Preenche todos os campos obrigatórios!');
-    const pagamentos = getDados('pagamentos');
-    pagamentos.push({ aluno, valor, data, mesReferencia, metodo });
-    setDados('pagamentos', pagamentos);
-    atualizarTabelaPagamentos();
-    limparFormPagamento();
-}
-function removerPagamento(idx) {
-    const pagamentos = getDados('pagamentos');
-    pagamentos.splice(idx, 1);
-    setDados('pagamentos', pagamentos);
-    atualizarTabelaPagamentos();
-}
-function limparFormPagamento() {
-    document.getElementById('alunoPagamento').value = '';
-    document.getElementById('valorPagamento').value = '';
-    document.getElementById('dataPagamento').value = '';
-    document.getElementById('mesReferencia').value = '';
-    document.getElementById('metodoPagamento').value = 'Dinheiro';
-}
-
-// --------- PAGAMENTO A PROFESSORES ---------
-function atualizarTabelaPagamentosProfessores() {
-    const pagamentos = getDados('pagamentosProfessores');
-    const professores = getDados('professores');
-    const tabela = document.getElementById('tabelaPagamentosProfessores');
-    tabela.innerHTML = '';
-    pagamentos.forEach((pag, i) => {
-        const professor = professores[pag.professor];
-        tabela.innerHTML += `
-        <tr>
-            <td>${pag.data}</td>
-            <td>${professor ? professor.nome : ''}</td>
-            <td>€${pag.valor || 0}</td>
-            <td>${pag.referencia || ''}</td>
-            <td>${pag.metodo || ''}</td>
-            <td>
-                <button class="btn btn-danger" onclick="removerPagamentoProfessor(${i})">Remover</button>
-            </td>
-        </tr>`;
-    });
-}
-function registrarPagamentoProfessor() {
-    const professor = document.getElementById('professorPagamento').value;
-    const valor = parseFloat(document.getElementById('valorPagamentoProfessor').value) || 0;
-    const data = document.getElementById('dataPagamentoProfessor').value;
-    const referencia = document.getElementById('referenciaPagamentoProfessor').value;
-    const metodo = document.getElementById('metodoPagamentoProfessor').value;
-    if (!professor || !valor || !data) return alert('Preenche todos os campos obrigatórios!');
-    const pagamentos = getDados('pagamentosProfessores');
-    pagamentos.push({ professor, valor, data, referencia, metodo });
-    setDados('pagamentosProfessores', pagamentos);
-    atualizarTabelaPagamentosProfessores();
-    limparFormPagamentoProfessor();
-}
-function removerPagamentoProfessor(idx) {
-    const pagamentos = getDados('pagamentosProfessores');
-    pagamentos.splice(idx, 1);
-    setDados('pagamentosProfessores', pagamentos);
-    atualizarTabelaPagamentosProfessores();
-}
-function limparFormPagamentoProfessor() {
-    document.getElementById('professorPagamento').value = '';
-    document.getElementById('valorPagamentoProfessor').value = '';
-    document.getElementById('dataPagamentoProfessor').value = '';
-    document.getElementById('referenciaPagamentoProfessor').value = '';
-    document.getElementById('metodoPagamentoProfessor').value = 'Dinheiro';
-}
-
-// --------- DASHBOARD E RELATÓRIOS ---------
-function atualizarProximasAulas() {
-    const aulas = getDados('aulas');
-    const alunos = getDados('alunos');
-    const professores = getDados('professores');
-    const tbody = document.getElementById('proximasAulas');
-    tbody.innerHTML = '';
-    let futuras = aulas.filter(a => {
-        const dataAula = new Date(a.data + 'T' + a.hora);
-        return dataAula >= new Date();
-    });
-    futuras = futuras.sort((a, b) => new Date(a.data + 'T' + a.hora) - new Date(b.data + 'T' + b.hora));
-    if (futuras.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: #666;">Nenhuma aula agendada</td></tr>`;
-        return;
+function carregarDados() {
+    const dadosSalvos = localStorage.getItem('nerDados');
+    if (dadosSalvos) {
+        const dados = JSON.parse(dadosSalvos);
+        alunos = dados.alunos || [];
+        professores = dados.professores || [];
+        aulas = dados.aulas || [];
+        pagamentos = dados.pagamentos || [];
+        pagamentosProfessores = dados.pagamentosProfessores || [];
+        contadorIds = dados.contadorIds || { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
     }
-    futuras.slice(0, 10).forEach(aula => {
-        const aluno = alunos[aula.aluno];
-        const professor = professores[aula.professor];
-        tbody.innerHTML += `
-        <tr>
-            <td>${aula.data} ${aula.hora}</td>
-            <td>${aluno ? aluno.nome : ''}</td>
-            <td>${professor ? professor.nome : ''}</td>
-            <td>${aluno ? aluno.instrumento : ''}</td>
-            <td class="status-ativo">Agendada</td>
-        </tr>`;
-    });
 }
 
-function atualizarDashboard() {
-    const alunos = getDados('alunos');
-    const professores = getDados('professores');
-    const aulas = getDados('aulas');
-    const pagamentos = getDados('pagamentos');
-    document.getElementById('totalAlunos').textContent = alunos.length;
-    document.getElementById('totalProfessores').textContent = professores.length;
-    // Aulas do mês atual
-    const mesAtual = (new Date()).toISOString().slice(0, 7);
-    const aulasMes = aulas.filter(a => a.data && a.data.startsWith(mesAtual));
-    document.getElementById('totalAulas').textContent = aulasMes.length;
-    // Receita mensal
-    const receitaMes = pagamentos.filter(p => p.mesReferencia && p.mesReferencia.startsWith(mesAtual))
-        .reduce((acc, p) => acc + (parseFloat(p.valor) || 0), 0);
-    document.getElementById('receitaMensal').textContent = '€' + receitaMes;
-}
+        // Dados em memória
+        let alunos = [];
+        let professores = [];
+        let aulas = [];
+        let pagamentos = [];
+let pagamentosProfessores = [];  // 👈 Novo
+        let contadorIds = { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
 
-function atualizarRelatorios() {
-    const pagamentos = getDados('pagamentos');
-    const aulas = getDados('aulas');
-    const alunos = getDados('alunos');
-    // Receita total
-    const receitaTotal = pagamentos.reduce((acc, p) => acc + (parseFloat(p.valor) || 0), 0);
-    document.getElementById('receitaTotal').textContent = '€' + receitaTotal;
-    // Aulas realizadas
-    document.getElementById('aulasRealizadas').textContent = aulas.length;
-    // Alunos ativos
-    document.getElementById('alunosAtivos').textContent = alunos.filter(a => a.ativo !== false).length;
-    // Média mensal
-    const meses = [...new Set(pagamentos.map(p => p.mesReferencia).filter(Boolean))];
-    document.getElementById('mediaMensal').textContent = '€' + (meses.length ? Math.round(receitaTotal/meses.length) : 0);
-}
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDados();
+            atualizarDashboard();
+            atualizarSelects();
+            
+            // Definir data atual como padrão
+            const hoje = new Date().toISOString().split('T')[0];
+            document.getElementById('dataPagamento').value = hoje;
+            document.getElementById('dataAula').value = hoje;
+            
+            // Definir mês atual como padrão
+            const mesAtual = new Date().toISOString().slice(0, 7);
+            document.getElementById('mesReferencia').value = mesAtual;
+        });
 
-// --------- FILTROS (EXEMPLO PARA ALUNOS, REPLICA PARA OUTROS) ---------
-function filtrarAlunos() {
-    const termo = document.getElementById('searchAlunos').value.toLowerCase();
-    const alunos = getDados('alunos');
-    const tabela = document.getElementById('tabelaAlunos');
-    tabela.innerHTML = '';
-    alunos.forEach((aluno, i) => {
-        if (
-            aluno.nome.toLowerCase().includes(termo) ||
-            aluno.email.toLowerCase().includes(termo) ||
-            aluno.instrumento.toLowerCase().includes(termo)
-        ) {
-            tabela.innerHTML += `
-            <tr>
-                <td>${aluno.nome}</td>
-                <td>${aluno.email}</td>
-                <td>${aluno.telefone}</td>
-                <td>${aluno.instrumento}</td>
-                <td>€${aluno.mensalidade || 0}</td>
-                <td class="${aluno.ativo !== false ? 'status-ativo' : 'status-inativo'}">${aluno.ativo !== false ? 'Ativo' : 'Inativo'}</td>
-                <td>
-                    <button class="btn btn-danger" onclick="removerAluno(${i})">Remover</button>
-                </td>
-            </tr>`;
-        }
-    });
-}
-// Replica lógica de filtro para professores, aulas, pagamentos...
+        // Funções de navegação
+        function showTab(tabName) {
+            // Esconder todas as abas
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+           document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
 
-// --------- INICIALIZAÇÃO ---------
-function inicializar() {
-    atualizarTabelaAlunos();
-    atualizarTabelaProfessores();
-    atualizarTabelaAulas();
-    atualizarTabelaPagamentos();
+            
+            // Atualizar dados específicos da aba
+            if (tabName === 'dashboard') {
+                atualizarDashboard();
+            } else if (tabName === 'relatorios') {
+                atualizarRelatorios();
     atualizarTabelaPagamentosProfessores();
-    atualizarDashboard();
-    atualizarRelatorios();
-}
-window.onload = inicializar;
-</script>
+            }
+        }
+
+        // Função para mostrar alertas
+        function mostrarAlerta(mensagem, tipo = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${tipo}`;
+            alertDiv.textContent = mensagem;
+            
+            const container = document.querySelector('.container');
+            container.insertBefore(alertDiv, container.firstChild);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // GESTÃO DE ALUNOS
+        function adicionarAluno() {
+            const nome = document.getElementById('nomeAluno').value;
+            const email = document.getElementById('emailAluno').value;
+            const telefone = document.getElementById('telefoneAluno').value;
+            const nascimento = document.getElementById('nascimentoAluno').value;
+            const instrumento = document.getElementById('instrumentoAluno').value;
+            const mensalidade = parseFloat(document.getElementById('mensalidadeAluno').value) || 0;
+
+            if (!nome || !email || !instrumento) {
+                mostrarAlerta('Preencha os campos obrigatórios: Nome, Email e Instrumento', 'error');
+                return;
+            }
+
+            const novoAluno = {
+                id: contadorIds.aluno++,
+                nome,
+                email,
+                telefone,
+                nascimento,
+                instrumento,
+                mensalidade,
+                status: 'Ativo',
+                dataInscricao: new Date().toLocaleDateString('pt-PT')
+            };
+
+            alunos.push(novoAluno);
+            salvarDados();
+            atualizarTabelaAlunos();
+            atualizarSelects();
+            limparFormAluno();
+            mostrarAlerta('Aluno adicionado com sucesso!');
+        }
+
+        function limparFormAluno() {
+            document.getElementById('nomeAluno').value = '';
+            document.getElementById('emailAluno').value = '';
+            document.getElementById('telefoneAluno').value = '';
+            document.getElementById('nascimentoAluno').value = '';
+            document.getElementById('instrumentoAluno').value = '';
+            document.getElementById('mensalidadeAluno').value = '';
+        }
+
+        function atualizarTabelaAlunos() {
+            const tbody = document.getElementById('tabelaAlunos');
+            tbody.innerHTML = '';
+
+            alunos.forEach(aluno => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${aluno.nome}</td>
+                    <td>${aluno.email}</td>
+                    <td>${aluno.telefone}</td>
+                    <td>${aluno.instrumento}</td>
+                    <td class="euro">€${aluno.mensalidade.toFixed(2)}</td>
+                    <td class="status-${aluno.status.toLowerCase()}">${aluno.status}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removerAluno(${aluno.id})">Remover</button>
+                    </td>
+                `;
+            });
+        }
+
+        function removerAluno(id) {
+            if (confirm('Tem certeza que deseja remover este aluno?')) {
+                alunos = alunos.filter(aluno => aluno.id !== id);
+                salvarDados();
+                atualizarTabelaAlunos();
+                atualizarSelects();
+                mostrarAlerta('Aluno removido com sucesso!');
+            }
+        }
+
+        function filtrarAlunos() {
+            const termo = document.getElementById('searchAlunos').value.toLowerCase();
+            const rows = document.querySelectorAll('#tabelaAlunos tr');
+            
+            rows.forEach(row => {
+                const texto = row.textContent.toLowerCase();
+                row.style.display = texto.includes(termo) ? '' : 'none';
+            });
+        }
+
+        // GESTÃO DE PROFESSORES
+        function adicionarProfessor() {
+            const nome = document.getElementById('nomeProfessor').value;
+            const email = document.getElementById('emailProfessor').value;
+            const telefone = document.getElementById('telefoneProfessor').value;
+            const especialidade = document.getElementById('especialidadeProfessor').value;
+            const valorAula = parseFloat(document.getElementById('valorAulaProfessor').value) || 0;
+
+            if (!nome || !email || !especialidade) {
+                mostrarAlerta('Preencha os campos obrigatórios: Nome, Email e Especialidade', 'error');
+                return;
+            }
+
+            const novoProfessor = {
+                id: contadorIds.professor++,
+                nome,
+                email,
+                telefone,
+                especialidade,
+                valorAula,
+                status: 'Ativo'
+            };
+
+            professores.push(novoProfessor);
+            salvarDados();
+            atualizarTabelaProfessores();
+            atualizarSelects();
+            limparFormProfessor();
+            mostrarAlerta('Professor adicionado com sucesso!');
+        }
+
+        function limparFormProfessor() {
+            document.getElementById('nomeProfessor').value = '';
+            document.getElementById('emailProfessor').value = '';
+            document.getElementById('telefoneProfessor').value = '';
+            document.getElementById('especialidadeProfessor').value = '';
+            document.getElementById('valorAulaProfessor').value = '';
+        }
+
+        function atualizarTabelaProfessores() {
+            const tbody = document.getElementById('tabelaProfessores');
+            tbody.innerHTML = '';
+
+            professores.forEach(professor => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${professor.nome}</td>
+                    <td>${professor.email}</td>
+                    <td>${professor.telefone}</td>
+                    <td>${professor.especialidade}</td>
+                    <td class="euro">€${professor.valorAula.toFixed(2)}</td>
+                    <td class="status-${professor.status.toLowerCase()}">${professor.status}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removerProfessor(${professor.id})">Remover</button>
+                    </td>
+                `;
+            });
+        }
+
+        function removerProfessor(id) {
+            if (confirm('Tem certeza que deseja remover este professor?')) {
+                professores = professores.filter(professor => professor.id !== id);
+                salvarDados();
+                atualizarTabelaProfessores();
+                atualizarSelects();
+                mostrarAlerta('Professor removido com sucesso!');
+            }
+        }
+
+        function filtrarProfessores() {
+            const termo = document.getElementById('searchProfessores').value.toLowerCase();
+            const rows = document.querySelectorAll('#tabelaProfessores tr');
+            
+            rows.forEach(row => {
+                const texto = row.textContent.toLowerCase();
+                row.style.display = texto.includes(termo) ? '' : 'none';
+            });
+        }
+
+        // GESTÃO DE AULAS
+        function agendarAula() {
+            const alunoId = parseInt(document.getElementById('alunoAula').value);
+            const professorId = parseInt(document.getElementById('professorAula').value);
+            const data = document.getElementById('dataAula').value;
+            const horario = document.getElementById('horarioAula').value;
+            const duracao = parseInt(document.getElementById('duracaoAula').value);
+            const valor = parseFloat(document.getElementById('valorAula').value) || 0;
+
+            if (!alunoId || !professorId || !data || !horario) {
+                mostrarAlerta('Preencha todos os campos obrigatórios', 'error');
+                return;
+            }
+
+            const aluno = alunos.find(a => a.id === alunoId);
+            const professor = professores.find(p => p.id === professorId);
+
+            const novaAula = {
+                id: contadorIds.aula++,
+                alunoId,
+                professorId,
+                alunoNome: aluno.nome,
+                professorNome: professor.nome,
+                data,
+                horario,
+                duracao,
+                valor,
+                status: 'Agendada'
+            };
+
+            aulas.push(novaAula);
+            salvarDados();
+            atualizarTabelaAulas();
+            limparFormAula();
+            atualizarDashboard();
+            mostrarAlerta('Aula agendada com sucesso!');
+        }
+
+        function limparFormAula() {
+            document.getElementById('alunoAula').value = '';
+            document.getElementById('professorAula').value = '';
+            document.getElementById('dataAula').value = new Date().toISOString().split('T')[0];
+            document.getElementById('horarioAula').value = '';
+            document.getElementById('duracaoAula').value = '60';
+            document.getElementById('valorAula').value = '';
+        }
+
+        function atualizarTabelaAulas() {
+            const tbody = document.getElementById('tabelaAulas');
+            tbody.innerHTML = '';
+
+            // Ordenar aulas por data e horário
+            const aulasOrdenadas = [...aulas].sort((a, b) => {
+                const dataA = new Date(a.data + 'T' + a.horario);
+                const dataB = new Date(b.data + 'T' + b.horario);
+                return dataB - dataA;
+            });
+
+            aulasOrdenadas.forEach(aula => {
+                const dataFormatada = new Date(aula.data).toLocaleDateString('pt-PT');
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${dataFormatada} ${aula.horario}</td>
+                    <td>${aula.alunoNome}</td>
+                    <td>${aula.professorNome}</td>
+                    <td>${aula.duracao} min</td>
+                    <td class="euro">€${aula.valor.toFixed(2)}</td>
+                    <td class="status-${aula.status.toLowerCase().replace(' ', '')}">${aula.status}</td>
+                    <td>
+                        <button class="btn" onclick="marcarAulaRealizada(${aula.id})">Realizada</button>
+                        <button class="btn btn-danger" onclick="cancelarAula(${aula.id})">Cancelar</button>
+                    </td>
+                `;
+            });
+        }
+
+        function marcarAulaRealizada(id) {
+            const aula = aulas.find(a => a.id === id);
+            if (aula) {
+                aula.status = 'Realizada';
+                salvarDados();
+                atualizarTabelaAulas();
+                atualizarDashboard();
+                mostrarAlerta('Aula marcada como realizada!');
+            }
+        }
+
+        function cancelarAula(id) {
+            if (confirm('Tem certeza que deseja cancelar esta aula?')) {
+                const aula = aulas.find(a => a.id === id);
+                if (aula) {
+                    aula.status = 'Cancelada';
+                    salvarDados();
+                    atualizarTabelaAulas();
+                    atualizarDashboard();
+                    mostrarAlerta('Aula cancelada!');
+                }
+            }
+        }
+
+        function filtrarAulas() {
+            const termo = document.getElementById('searchAulas').value.toLowerCase();
+            const rows = document.querySelectorAll('#tabelaAulas tr');
+            
+            rows.forEach(row => {
+                const texto = row.textContent.toLowerCase();
+                row.style.display = texto.includes(termo) ? '' : 'none';
+            });
+        }
+
+        // GESTÃO DE PAGAMENTOS
+        function registrarPagamento() {
+            const alunoId = parseInt(document.getElementById('alunoPagamento').value);
+            const valor = parseFloat(document.getElementById('valorPagamento').value);
+            const data = document.getElementById('dataPagamento').value;
+            const mesReferencia = document.getElementById('mesReferencia').value;
+            const metodo = document.getElementById('metodoPagamento').value;
+
+            if (!alunoId || !valor || !data || !mesReferencia) {
+                mostrarAlerta('Preencha todos os campos obrigatórios', 'error');
+                return;
+            }
+
+            const aluno = alunos.find(a => a.id === alunoId);
+
+            const novoPagamento = {
+                id: contadorIds.pagamento++,
+                alunoId,
+                alunoNome: aluno.nome,
+                valor,
+                data,
+                mesReferencia,
+                metodo
+            };
+
+            pagamentos.push(novoPagamento);
+            salvarDados();
+            atualizarTabelaPagamentos();
+            limparFormPagamento();
+            atualizarDashboard();
+            mostrarAlerta('Pagamento registrado com sucesso!');
+        }
+
+        function limparFormPagamento() {
+            document.getElementById('alunoPagamento').value = '';
+            document.getElementById('valorPagamento').value = '';
+            document.getElementById('dataPagamento').value = new Date().toISOString().split('T')[0];
+            document.getElementById('mesReferencia').value = new Date().toISOString().slice(0, 7);
+            document.getElementById('metodoPagamento').value = 'Dinheiro';
+        }
+
+        function atualizarTabelaPagamentos() {
+            const tbody = document.getElementById('tabelaPagamentos');
+            tbody.innerHTML = '';
+
+            // Ordenar pagamentos por data
+            const pagamentosOrdenados = [...pagamentos].sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            pagamentosOrdenados.forEach(pagamento => {
+                const dataFormatada = new Date(pagamento.data).toLocaleDateString('pt-PT');
+                const mesFormatado = new Date(pagamento.mesReferencia + '-01').toLocaleDateString('pt-PT', { month: '2-digit', year: 'numeric' });
+                
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${dataFormatada}</td>
+                    <td>${pagamento.alunoNome}</td>
+                    <td class="euro">€${pagamento.valor.toFixed(2)}</td>
+                    <td>${mesFormatado}</td>
+                    <td>${pagamento.metodo}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removerPagamento(${pagamento.id})">Remover</button>
+                    </td>
+                `;
+            });
+        }
+
+        function removerPagamento(id) {
+            if (confirm('Tem certeza que deseja remover este pagamento?')) {
+                pagamentos = pagamentos.filter(pagamento => pagamento.id !== id);
+                salvarDados();
+                atualizarTabelaPagamentos();
+                atualizarDashboard();
+                mostrarAlerta('Pagamento removido!');
+            }
+        }
+
+        function filtrarPagamentos() {
+            const termo = document.getElementById('searchPagamentos').value.toLowerCase();
+            const rows = document.querySelectorAll('#tabelaPagamentos tr');
+            
+            rows.forEach(row => {
+                const texto = row.textContent.toLowerCase();
+                row.style.display = texto.includes(termo) ? '' : 'none';
+            });
+        }
+
+        // DASHBOARD E ESTATÍSTICAS
+        function atualizarDashboard() {
+            // Atualizar contadores
+            document.getElementById('totalAlunos').textContent = alunos.length;
+            document.getElementById('totalProfessores').textContent = professores.length;
+            
+            // Aulas deste mês
+            const hoje = new Date();
+            const mesAtual = hoje.getMonth();
+            const anoAtual = hoje.getFullYear();
+            
+            const aulasMes = aulas.filter(aula => {
+                const dataAula = new Date(aula.data);
+                return dataAula.getMonth() === mesAtual && dataAula.getFullYear() === anoAtual;
+            });
+            
+            document.getElementById('totalAulas').textContent = aulasMes.length;
+            
+            // Receita mensal
+            const receitaMes = pagamentos.filter(pagamento => {
+                const dataPagamento = new Date(pagamento.data);
+                return dataPagamento.getMonth() === mesAtual && dataPagamento.getFullYear() === anoAtual;
+            }).reduce((total, pagamento) => total + pagamento.valor, 0);
+            
+            document.getElementById('receitaMensal').textContent = `€${receitaMes.toFixed(2)}`;
+            
+            // Próximas aulas
+            atualizarProximasAulas();
+        }
+
+        function atualizarProximasAulas() {
+            const tbody = document.getElementById('proximasAulas');
+            const hoje = new Date();
+            
+            const proximasAulas = aulas.filter(aula => {
+                const dataAula = new Date(aula.data + 'T' + aula.horario);
+                return dataAula >= hoje && aula.status === 'Agendada';
+            }).sort((a, b) => {
+                const dataA = new Date(a.data + 'T' + a.horario);
+                const dataB = new Date(b.data + 'T' + b.horario);
+                return dataA - dataB;
+            }).slice(0, 5);
+
+            tbody.innerHTML = '';
+            
+            if (proximasAulas.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #666;">
+                            Nenhuma aula agendada
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            proximasAulas.forEach(aula => {
+                const aluno = alunos.find(a => a.id === aula.alunoId);
+                const professor = professores.find(p => p.id === aula.professorId);
+                const dataFormatada = new Date(aula.data).toLocaleDateString('pt-PT');
+                
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${dataFormatada} ${aula.horario}</td>
+                    <td>${aula.alunoNome}</td>
+                    <td>${aula.professorNome}</td>
+                    <td>${aluno ? aluno.instrumento : 'N/A'}</td>
+                    <td class="status-agendada">${aula.status}</td>
+                `;
+            });
+        }
+
+        function atualizarRelatorios() {
+            // Receita total
+            const receitaTotal = pagamentos.reduce((total, pagamento) => total + pagamento.valor, 0);
+            document.getElementById('receitaTotal').textContent = `€${receitaTotal.toFixed(2)}`;
+            
+            // Aulas realizadas
+            const aulasRealizadas = aulas.filter(aula => aula.status === 'Realizada').length;
+            document.getElementById('aulasRealizadas').textContent = aulasRealizadas;
+            
+            // Alunos ativos
+            const alunosAtivos = alunos.filter(aluno => aluno.status === 'Ativo').length;
+            document.getElementById('alunosAtivos').textContent = alunosAtivos;
+            
+            // Média mensal
+            const mesesComPagamentos = new Set(pagamentos.map(p => p.mesReferencia)).size;
+            const mediaMensal = mesesComPagamentos > 0 ? receitaTotal / mesesComPagamentos : 0;
+            document.getElementById('mediaMensal').textContent = `€${mediaMensal.toFixed(2)}`;
+            
+            // Resumo por instrumentos
+            atualizarResumoInstrumentos();
+        }
+
+        function atualizarResumoInstrumentos() {
+            const tbody = document.getElementById('resumoInstrumentos');
+            tbody.innerHTML = '';
+            
+            const instrumentos = {};
+            
+            alunos.forEach(aluno => {
+                if (!instrumentos[aluno.instrumento]) {
+                    instrumentos[aluno.instrumento] = {
+                        alunos: 0,
+                        receita: 0
+                    };
+                }
+                instrumentos[aluno.instrumento].alunos++;
+                instrumentos[aluno.instrumento].receita += aluno.mensalidade;
+            });
+            
+            const receitaTotal = Object.values(instrumentos).reduce((total, inst) => total + inst.receita, 0);
+            
+            Object.keys(instrumentos).forEach(instrumento => {
+                const dados = instrumentos[instrumento];
+                const percentual = receitaTotal > 0 ? (dados.receita / receitaTotal * 100).toFixed(1) : 0;
+                
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${instrumento}</td>
+                    <td>${dados.alunos}</td>
+                    <td class="euro">€${dados.receita.toFixed(2)}</td>
+                    <td>${percentual}%</td>
+                `;
+            });
+        }
+
+        // FUNÇÕES DE SELECTS
+        function atualizarSelects() {
+            // Select de alunos
+            const selectAlunoAula = document.getElementById('alunoAula');
+            const selectAlunoPagamento = document.getElementById('alunoPagamento');
+            
+            [selectAlunoAula, selectAlunoPagamento].forEach(select => {
+                const valorAtual = select.value;
+                select.innerHTML = '<option value="">Selecione um aluno...</option>';
+                
+                alunos.forEach(aluno => {
+                    const option = document.createElement('option');
+                    option.value = aluno.id;
+                    option.textContent = `${aluno.nome} (${aluno.instrumento})`;
+                    select.appendChild(option);
+                });
+                
+                select.value = valorAtual;
+
+            });
+            
+            // Select de professores
+            const selectProfessorAula = document.getElementById('professorAula');
+            const valorAtualProf = selectProfessorAula.value;
+            selectProfessorAula.innerHTML = '<option value="">Selecione um professor...</option>';
+            
+            professores.forEach(professor => {
+                const option = document.createElement('option');
+                option.value = professor.id;
+                option.textContent = `${professor.nome} (${professor.especialidade})`;
+                selectProfessorAula.appendChild(option);
+            });
+            
+            selectProfessorAula.value = valorAtualProf;
+
+            // Preencher select de pagamentos a professores
+            const selectProfessorPagamento = document.getElementById('professorPagamento');
+            const valorAtualPagamento = selectProfessorPagamento.value;
+            selectProfessorPagamento.innerHTML = '<option value="">Selecione um professor...</option>';
+            professores.forEach(professor => {
+                const option = document.createElement('option');
+                option.value = professor.id;
+                option.textContent = `${professor.nome} (${professor.especialidade})`;
+                selectProfessorPagamento.appendChild(option);
+            });
+            selectProfessorPagamento.value = valorAtualPagamento;
+        }
+
+        // AUTO-PREENCHIMENTO DE VALOR DA AULA
+        document.getElementById('professorAula').addEventListener('change', function() {
+            const professorId = parseInt(this.value);
+            const professor = professores.find(p => p.id === professorId);
+            
+            if (professor) {
+                document.getElementById('valorAula').value = professor.valorAula.toFixed(2);
+            }
+        });
+
+        // AUTO-PREENCHIMENTO DE MENSALIDADE NO PAGAMENTO
+        document.getElementById('alunoPagamento').addEventListener('change', function() {
+            const alunoId = parseInt(this.value);
+            const aluno = alunos.find(a => a.id === alunoId);
+            
+            if (aluno) {
+                document.getElementById('valorPagamento').value = aluno.mensalidade.toFixed(2);
+            }
+        });
+
+        // FUNÇÕES DE RELATÓRIOS
+        function gerarRelatorioMensal() {
+            const hoje = new Date();
+            const mesAtual = hoje.getMonth();
+            const anoAtual = hoje.getFullYear();
+            const nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+                               'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            const pagamentosMes = pagamentos.filter(pagamento => {
+                const dataPagamento = new Date(pagamento.data);
+                return dataPagamento.getMonth() === mesAtual && dataPagamento.getFullYear() === anoAtual;
+            });
+            
+            const aulasMes = aulas.filter(aula => {
+                const dataAula = new Date(aula.data);
+                return dataAula.getMonth() === mesAtual && dataAula.getFullYear() === anoAtual;
+            });
+            
+            const receitaMes = pagamentosMes.reduce((total, p) => total + p.valor, 0);
+            const aulasRealizadasMes = aulasMes.filter(a => a.status === 'Realizada').length;
+            
+            const relatorio = `
+=== RELATÓRIO MENSAL - ${nomesMeses[mesAtual]} ${anoAtual} ===
+NER - Nova Escola Rock
+
+RESUMO FINANCEIRO:
+• Receita Total: €${receitaMes.toFixed(2)}
+• Número de Pagamentos: ${pagamentosMes.length}
+• Valor Médio por Pagamento: €${pagamentosMes.length > 0 ? (receitaMes / pagamentosMes.length).toFixed(2) : '0.00'}
+
+ATIVIDADE:
+• Aulas Agendadas: ${aulasMes.length}
+• Aulas Realizadas: ${aulasRealizadasMes}
+• Taxa de Realização: ${aulasMes.length > 0 ? ((aulasRealizadasMes / aulasMes.length) * 100).toFixed(1) : 0}%
+
+ALUNOS:
+• Total de Alunos Ativos: ${alunos.filter(a => a.status === 'Ativo').length}
+• Professores Ativos: ${professores.filter(p => p.status === 'Ativo').length}
+
+Relatório gerado em: ${new Date().toLocaleString('pt-PT')}
+            `;
+            
+            // Criar e baixar arquivo de texto
+            const elemento = document.createElement('a');
+            const arquivo = new Blob([relatorio], {type: 'text/plain'});
+            elemento.href = URL.createObjectURL(arquivo);
+            elemento.download = `relatorio_${nomesMeses[mesAtual]}_${anoAtual}.txt`;
+            elemento.click();
+            
+            mostrarAlerta('Relatório mensal gerado e baixado!');
+        }
+
+        function exportarDados() {
+            const dados = {
+                alunos,
+                professores,
+                aulas,
+                pagamentos,
+                exportadoEm: new Date().toISOString(),
+                escola: 'NER - Nova Escola Rock'
+            };
+            
+            const elemento = document.createElement('a');
+            const arquivo = new Blob([JSON.stringify(dados, null, 2)], {type: 'application/json'});
+            elemento.href = URL.createObjectURL(arquivo);
+            elemento.download = `backup_ner_${new Date().toISOString().split('T')[0]}.json`;
+            elemento.click();
+            
+            mostrarAlerta('Dados exportados com sucesso!');
+        }
+
+        function limparTodosDados() {
+            if (confirm('ATENÇÃO: Esta ação irá apagar TODOS os dados da escola. Esta ação não pode ser desfeita. Tem certeza?')) {
+                if (confirm('Última confirmação: Todos os alunos, professores, aulas e pagamentos serão permanentemente removidos. Continuar?')) {
+                    alunos = [];
+                    professores = [];
+                    aulas = [];
+                    pagamentos = [];
+                    contadorIds = { aluno: 1, professor: 1, aula: 1, pagamento: 1 };
+                    
+                    salvarDados();
+                    
+                    // Atualizar todas as tabelas
+                    atualizarTabelaAlunos();
+                    atualizarTabelaProfessores();
+                    atualizarTabelaAulas();
+                    atualizarTabelaPagamentos();
+                    atualizarSelects();
+                    atualizarDashboard();
+                    atualizarRelatorios();
+    atualizarTabelaPagamentosProfessores();
+                    
+                    mostrarAlerta('Todos os dados foram removidos!', 'error');
+                }
+            }
+        }
+           
+        
+        function registrarPagamentoProfessor() {
+            const professorId = parseInt(document.getElementById('professorPagamento').value);
+            const valor = parseFloat(document.getElementById('valorPagamentoProfessor').value);
+            const data = document.getElementById('dataPagamentoProfessor').value;
+            const mesReferencia = document.getElementById('mesRefPagamentoProfessor').value;
+            const metodo = document.getElementById('metodoPagamentoProfessor').value;
+
+            if (!professorId || !valor || !data || !mesReferencia) {
+                mostrarAlerta('Preencha todos os campos obrigatórios', 'error');
+                return;
+            }
+
+            const professor = professores.find(p => p.id === professorId);
+
+            const novoPagamento = {
+                id: Date.now(),
+                professorId,
+                professorNome: professor.nome,
+                valor,
+                data,
+                mesReferencia,
+                metodo
+            };
+
+            pagamentosProfessores.push(novoPagamento);
+            salvarDados();
+            atualizarTabelaPagamentosProfessores();
+            limparFormPagamentoProfessor();
+            mostrarAlerta('Pagamento registrado com sucesso!');
+        }
+
+        function atualizarTabelaPagamentosProfessores() {
+            const tbody = document.getElementById('tabelaPagamentosProfessores');
+            tbody.innerHTML = '';
+
+            const ordenados = [...pagamentosProfessores].sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            ordenados.forEach(pagamento => {
+                const dataFormatada = new Date(pagamento.data).toLocaleDateString('pt-PT');
+                const mesFormatado = new Date(pagamento.mesReferencia + '-01').toLocaleDateString('pt-PT', { month: '2-digit', year: 'numeric' });
+
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${dataFormatada}</td>
+                    <td>${pagamento.professorNome}</td>
+                    <td class="euro">€${pagamento.valor.toFixed(2)}</td>
+                    <td>${mesFormatado}</td>
+                    <td>${pagamento.metodo}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removerPagamentoProfessor(${pagamento.id})">Remover</button>
+                    </td>
+                `;
+            });
+        }
+
+        function limparFormPagamentoProfessor() {
+            document.getElementById('professorPagamento').value = '';
+            document.getElementById('valorPagamentoProfessor').value = '';
+            document.getElementById('dataPagamentoProfessor').value = new Date().toISOString().split('T')[0];
+            document.getElementById('mesRefPagamentoProfessor').value = new Date().toISOString().slice(0, 7);
+            document.getElementById('metodoPagamentoProfessor').value = 'Dinheiro';
+        }
+
+        function removerPagamentoProfessor(id) {
+            if (confirm('Tem certeza que deseja remover este pagamento?')) {
+                pagamentosProfessores = pagamentosProfessores.filter(p => p.id !== id);
+                salvarDados();
+                atualizarTabelaPagamentosProfessores();
+                mostrarAlerta('Pagamento removido!');
+            }
+        }
+
+        function filtrarPagamentosProfessores() {
+            const termo = document.getElementById('searchPagamentosProfessores').value.toLowerCase();
+            const rows = document.querySelectorAll('#tabelaPagamentosProfessores tr');
+            rows.forEach(row => {
+                const texto = row.textContent.toLowerCase();
+                row.style.display = texto.includes(termo) ? '' : 'none';
+            });
+        }
+
+
+        // Inicializar tabelas
+        window.addEventListener('load', function() {
+            atualizarTabelaAlunos();
+            atualizarTabelaProfessores();
+            atualizarTabelaAulas();
+            atualizarTabelaPagamentos();
+            atualizarRelatorios();
+    atualizarTabelaPagamentosProfessores();
+        });
+    </script>
 </body>
 </html>
